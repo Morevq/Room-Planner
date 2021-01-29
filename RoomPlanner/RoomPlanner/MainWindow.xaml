@@ -5,9 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RoomPlanner"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="720" Width="1280">
     <Grid>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="293.646,215.152,0,0" VerticalAlignment="Top" Width="75"/>
+        <SelectiveScrollingGrid HorizontalAlignment="Left" Height="639" Margin="0,50,0,0" VerticalAlignment="Top" Width="234">
+            <TextBlock HorizontalAlignment="Left" Height="36" TextWrapping="Wrap" Text="Стена" VerticalAlignment="Top" Width="123" FontSize="18"/>
+            <TextBlock HorizontalAlignment="Left" Height="36" TextWrapping="Wrap" Text="Дверь" VerticalAlignment="Top" Width="111" Margin="123,0,0,0" FontSize="18"/>
+        </SelectiveScrollingGrid>
 
     </Grid>
 </Window>
