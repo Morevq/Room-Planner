@@ -8,10 +8,9 @@
         Title="MainWindow" Height="720" Width="1280">
     <Grid Background="#FF3F3F46">
         <Grid x:Name="SettingsPanel" VerticalAlignment="Top" Height="50" Background="#FF333337"/>
-    <Grid>
-        <SelectiveScrollingGrid HorizontalAlignment="Left" Height="639" Margin="0,50,0,0" VerticalAlignment="Top" Width="234">
-            <TextBlock HorizontalAlignment="Left" Height="36" TextWrapping="Wrap" Text="Стена" VerticalAlignment="Top" Width="123" FontSize="18"/>
-            <TextBlock HorizontalAlignment="Left" Height="36" TextWrapping="Wrap" Text="Дверь" VerticalAlignment="Top" Width="111" Margin="123,0,0,0" FontSize="18"/>
-        </SelectiveScrollingGrid>
-    </Grid>
+        <SelectiveScrollingGrid HorizontalAlignment="Left" Margin="0,50,0,0" Width="400">
+                <TextBlock HorizontalAlignment="Left" Height="36" TextWrapping="Wrap" Text="Стена" VerticalAlignment="Top" Width="123" FontSize="18"/>
+                <TextBlock HorizontalAlignment="Left" Height="36" TextWrapping="Wrap" Text="Дверь" VerticalAlignment="Top" Width="111" Margin="123,0,0,0" FontSize="18"/>
+            </SelectiveScrollingGrid>
+        </Grid>
 </Window>
