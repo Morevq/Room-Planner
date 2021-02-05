@@ -15,14 +15,25 @@ using System.Windows.Shapes;
 
 namespace RoomPlanner
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void CreateRoomButton_Click(object sender, RoutedEventArgs e)
+        {
+            Rectangle room = new Rectangle()
+            {
+                Width = 900,
+                Height = 610,
+                Stroke = Brushes.Black,
+                StrokeThickness = 10
+            };
+            Canvas.SetLeft(room, (WorkTable.ActualWidth - 900) / 2);
+            Canvas.SetTop(room, (WorkTable.ActualHeight - 610) / 2);
+            WorkTable.Children.Add(room);
         }
     }
 }

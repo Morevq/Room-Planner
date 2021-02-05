@@ -5,27 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RoomPlanner"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1280">
-    <Grid Background="#FF3F3F46">
-        <Grid x:Name="SettingsPanel" VerticalAlignment="Top" Height="50" Background="#FF333337"/>
-        <SelectiveScrollingGrid HorizontalAlignment="Left" Margin="0,50,0,0" Width="400">
+        Title="MainWindow" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" ResizeMode="CanMinimize">
+    <Grid x:Name="Grid" Background="#FFD7D7D7" Width="1280" Height="720">
+        <Grid x:Name="SettingsPanel" VerticalAlignment="Top" Height="30" Background="#FF323232"/>
+        <SelectiveScrollingGrid x:Name="FurnitureList" HorizontalAlignment="Left" Margin="0,30,0,0" Width="300" Background="#FFF0F0F0">
             <SelectiveScrollingGrid.RowDefinitions>
-                <RowDefinition Height="30*"/>
-                <RowDefinition Height="111*"/>
-                <RowDefinition Height="99*"/>
-                <RowDefinition Height="80*"/>
-                <RowDefinition Height="80*"/>
-                <RowDefinition Height="80*"/>
-                <RowDefinition Height="80*"/>
-                <RowDefinition Height="80*"/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
             </SelectiveScrollingGrid.RowDefinitions>
-            <SelectiveScrollingGrid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </SelectiveScrollingGrid.ColumnDefinitions>
-            <TextBlock HorizontalAlignment="Left" Height="29.953" TextWrapping="Wrap" Text="Стена" VerticalAlignment="Top" Width="200" FontSize="24" TextAlignment="Center"/>
-            <TextBlock HorizontalAlignment="Left" Height="29.953" TextWrapping="Wrap" Text="Дверь" VerticalAlignment="Top" Width="200" FontSize="24" Grid.Column="1" TextAlignment="Center"/>
-            <TextBlock Grid.ColumnSpan="2" Height="53.75" Grid.Row="2" TextWrapping="Wrap" Text="Мебель" VerticalAlignment="Top" Width="400" FontSize="24" HorizontalAlignment="Left" TextAlignment="Center"/>
+            <Button x:Name="CreateRoomButton" Content="Помещение" FontSize="20" FontFamily="Segoe UI Semibold" BorderBrush="#FFF0F0F0" Background="#FF323232" Foreground="White" Click="CreateRoomButton_Click"/>
         </SelectiveScrollingGrid>
+        <Canvas x:Name="WorkTable" Margin="300,30,0,0"/>
     </Grid>
 </Window>
