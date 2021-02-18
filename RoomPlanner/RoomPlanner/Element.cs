@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RoomPlanner
 {
-    abstract class Element
+    public class Element
     {
         
     }

@@ -17,6 +17,7 @@ namespace RoomPlanner
 {
     public partial class MainWindow : Window
     {
+        Rectangle room;
         public MainWindow()
         {
             InitializeComponent();
@@ -24,16 +25,48 @@ namespace RoomPlanner
 
         private void CreateRoomButton_Click(object sender, RoutedEventArgs e)
         {
-            Rectangle room = new Rectangle()
+            room = new Rectangle()
             {
-                Width = 900,
-                Height = 610,
+                Width = 600,
+                Height = 600,
                 Stroke = Brushes.Black,
-                StrokeThickness = 10
+                StrokeThickness = 20
             };
-            Canvas.SetLeft(room, (WorkTable.ActualWidth - 900) / 2);
-            Canvas.SetTop(room, (WorkTable.ActualHeight - 610) / 2);
+            Canvas.SetLeft(room, (WorkTable.ActualWidth - 600) / 2);
+            Canvas.SetTop(room, (WorkTable.ActualHeight - 600) / 2);
+            room.AddHandler(Rectangle.MouseLeftButtonUpEvent, new MouseButtonEventHandler(Rectangle_MouseLeftButtonUp));
             WorkTable.Children.Add(room);
+        }
+
+        private void Rectangle_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            Rectangle rectangle = (Rectangle)sender;
+            PropertyList.Visibility = Visibility.Visible;
+            ObjHeight.Text = Convert.ToString(rectangle.Height);
+            ObjWidth.Text = Convert.ToString(rectangle.Width);
+        }
+
+        private void ObjHeight_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            textBox.Background = Convert.ToString(room.Height) != textBox.Text ?
+                Brushes.LightGreen : Brushes.White;
+        }
+
+        private void ObjWidth_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            textBox.Background = Convert.ToString(room.Width) != textBox.Text ? 
+                Brushes.LightGreen : Brushes.White;
+        }
+
+        private void CompleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            room.Height = Convert.ToDouble(ObjHeight.Text);
+            room.Width = Convert.ToDouble(ObjWidth.Text);
+            ObjHeight.Background = Brushes.White;
+            ObjWidth.Background = Brushes.White;
+            PropertyList.Visibility = Visibility.Hidden;
         }
     }
 }
