@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" ResizeMode="CanMinimize">
     <Grid x:Name="Grid" Background="#FFD7D7D7" Width="1280" Height="720">
-        <Canvas x:Name="WorkTable" Margin="0,30,0,0"/>
+        <Canvas x:Name="WorkTable" Margin="200,30,0,0"/>
         <Grid x:Name="SettingsPanel" VerticalAlignment="Top" Height="30" Background="#FF323232"/>
         <SelectiveScrollingGrid x:Name="FurnitureList" HorizontalAlignment="Left" Margin="0,30,0,0" Width="200" Background="#FFF0F0F0">
             <SelectiveScrollingGrid.RowDefinitions>
@@ -23,10 +23,10 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </SelectiveScrollingGrid.RowDefinitions>
-            <Button x:Name="CreateRoomButton" Content="Помещение" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Click="CreateRoomButton_Click" Grid.Row="1"/>
             <Label Content="Ресурсы" FontFamily="Segoe UI Semibold" Padding="5,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="#FF272727" Foreground="White"/>
-            <Button x:Name="CreateRoomButton_Copy" Content="Шкаф" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="2" Margin="0,0,100.333,0" Click="CreateRoomButton_Copy_Click"/>
-            <Button x:Name="CreateRoomButton_Copy1" Content="Дверь" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="2" Margin="99.667,0,0,0" Click="CreateRoomButton_Copy1_Click"/>
+            <Button x:Name="CreateRoomButton" Content="Комната" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="1" Click="Button_Click"/>
+            <Button x:Name="CreateDoorButton" Content="Дверь" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="2" Click="CreateDoorButton_Click"/>
+            <Button x:Name="CreateCupboardButton" Content="Шкаф" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="3" Click="Button_Click"/>
         </SelectiveScrollingGrid>
         <SelectiveScrollingGrid x:Name="PropertyList" HorizontalAlignment="Right" Margin="1030,30,0,0" Width="200" Background="#FFF0F0F0" Visibility="Hidden">
             <SelectiveScrollingGrid.RowDefinitions>
@@ -44,9 +44,9 @@
             </SelectiveScrollingGrid.RowDefinitions>
             <Label Content="Свойства" FontFamily="Segoe UI Semibold" Padding="5,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="#FF272727" Foreground="White"/>
             <Label Content="Длина" Grid.Row="1" Margin="0,0,100,0" VerticalContentAlignment="Center" FontSize="18" FontFamily="Segoe UI Semibold" Padding="10,5,5,5"/>
-            <TextBox x:Name="ObjHeight" Grid.Row="1" TextWrapping="Wrap" VerticalContentAlignment="Center" Margin="110,0,10,0" VerticalAlignment="Center" TextChanged="ObjHeight_TextChanged"/>
+            <TextBox x:Name="ObjHeight" Grid.Row="1" TextWrapping="Wrap" VerticalContentAlignment="Center" Margin="110,0,10,0" VerticalAlignment="Center"/>
             <Label Content="Ширина" Grid.Row="2" Margin="0,0,100,0" VerticalContentAlignment="Center" FontSize="18" FontFamily="Segoe UI Semibold" Padding="10,5,5,5"/>
-            <TextBox x:Name="ObjWidth" Grid.Row="2" TextWrapping="Wrap" VerticalContentAlignment="Center" Margin="110,0,10,0" VerticalAlignment="Center" TextChanged="ObjWidth_TextChanged"/>
+            <TextBox x:Name="ObjWidth" Grid.Row="2" TextWrapping="Wrap" VerticalContentAlignment="Center" Margin="110,0,10,0" VerticalAlignment="Center"/>
             <Button x:Name="CompleteButton" Content="Готово" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Click="CompleteButton_Click" Grid.Row="10" Margin="10"/>
         </SelectiveScrollingGrid>
     </Grid>
