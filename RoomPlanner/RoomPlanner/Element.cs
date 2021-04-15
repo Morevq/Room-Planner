@@ -48,6 +48,7 @@ namespace RoomPlanner
             Width = width;
             Height = height;
             this.mainWindow = mainWindow;
+
             Rectangle element = new Rectangle()
             {
                 Width = Width,
@@ -105,13 +106,8 @@ namespace RoomPlanner
             Canvas.SetLeft(element, (mainWindow.WorkTable.ActualWidth - width) / 2);
             Canvas.SetTop(element, (mainWindow.WorkTable.ActualHeight - height) / 2);
             mainWindow.WorkTable.Children.Add(element);
-<<<<<<< Updated upstream
             element.MouseLeftButtonDown += ClickOnElement;
             element.MouseLeftButtonUp += DeclineElement;
-=======
-
-            element.MouseLeftButtonDown += ClickOnObject;
-            element.MouseLeftButtonUp += DeclineObject;
         }
 
         public override int Width
@@ -143,6 +139,8 @@ namespace RoomPlanner
     {
         public Door(MainWindow mainWindow)
         {
+            this.mainWindow = mainWindow;
+
             PathGeometry pathGeom = new PathGeometry();
             Path element = new Path();
 
@@ -172,16 +170,13 @@ namespace RoomPlanner
             element.Data = pathGeom;
             element.Stroke = Brushes.Green;
             element.StrokeThickness = 10;
-            Canvas.SetLeft(element, 50);
-            Canvas.SetTop(element, 50);
             mainWindow.WorkTable.Children.Add(element);
-
 
             Canvas.SetLeft(element, (mainWindow.WorkTable.ActualWidth - width) / 2);
             Canvas.SetTop(element, (mainWindow.WorkTable.ActualHeight - height) / 2);
 
-            element.MouseLeftButtonDown += ClickOnObject;
-            element.MouseLeftButtonUp += DeclineObject;
+            element.MouseLeftButtonDown += ClickOnElement;
+            element.MouseLeftButtonUp += DeclineElement;
         }
 
         public override int Width
@@ -214,6 +209,8 @@ namespace RoomPlanner
     {
         public Bed(MainWindow mainWindow)
         {
+            this.mainWindow = mainWindow;
+
             Path myPath = new Path();
             myPath.Stroke = Brushes.Black;
             myPath.StrokeThickness = 1;
@@ -228,13 +225,12 @@ namespace RoomPlanner
             myGeometryGroup.Children.Add(myRectGeometry);
             myPath.Data = myGeometryGroup;
 
-            StackPanel mainPanel = new StackPanel();
-            mainPanel.Children.Add(myPath);
-            mainWindow.WorkTable.Children.Add(mainPanel);
+            Canvas.SetLeft(myPath, (mainWindow.WorkTable.ActualWidth - width) / 2);
+            Canvas.SetTop(myPath, (mainWindow.WorkTable.ActualHeight - height) / 2);
+            mainWindow.WorkTable.Children.Add(myPath);
 
-            myPath.MouseLeftButtonDown += ClickOnObject;
-            myPath.MouseLeftButtonUp += DeclineObject;
->>>>>>> Stashed changes
+            myPath.MouseLeftButtonDown += ClickOnElement;
+            myPath.MouseLeftButtonUp += DeclineElement;
         }
 
         public override int Width
