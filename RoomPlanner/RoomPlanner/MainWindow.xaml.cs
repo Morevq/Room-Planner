@@ -119,10 +119,5 @@ namespace RoomPlanner
             p.MouseLeftButtonDown += ClickOnObject;
             p.MouseLeftButtonUp += DeclineObject;
         }
-
-        private void WorkTable_MouseMove(object sender, MouseEventArgs e)
-        {
-
-        }
     }
 }

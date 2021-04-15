@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" ResizeMode="CanMinimize" MouseMove="Window_MouseMove">
     <Grid x:Name="Grid" Background="#FFD7D7D7" Width="1280" Height="720">
-        <Canvas x:Name="WorkTable" Margin="200,30,200,0" MouseMove="WorkTable_MouseMove"/>
+        <Canvas x:Name="WorkTable" Margin="200,30,200,0"/>
         <Grid x:Name="SettingsPanel" VerticalAlignment="Top" Height="30" Background="#FF323232"/>
         <SelectiveScrollingGrid x:Name="FurnitureList" HorizontalAlignment="Left" Margin="0,30,0,0" Width="200" Background="#FFF0F0F0">
             <SelectiveScrollingGrid.RowDefinitions>
