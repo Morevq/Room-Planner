@@ -27,7 +27,7 @@
             <Button x:Name="CreateRoomButton" Content="Комната" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="1" Click="Button_Click"/>
             <Button x:Name="CreateDoorButton" Content="Дверь" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="2" Click="CreateDoorButton_Click"/>
             <Button x:Name="CreateCupboardButton" Content="Шкаф" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="3" Click="Button_Click"/>
-            <Button x:Name="CreateBadButton" Content="Кровать" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="4" Click="CreateBadButton_Click"/>
+            <Button x:Name="CreateBadButton" Content="Кровать" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="4" Click="CreateBedButton_Click"/>
         </SelectiveScrollingGrid>
         <SelectiveScrollingGrid x:Name="PropertyList" HorizontalAlignment="Right" Margin="1030,30,0,0" Width="200" Background="#FFF0F0F0" Visibility="Hidden">
             <SelectiveScrollingGrid.RowDefinitions>

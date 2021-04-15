@@ -31,57 +31,11 @@ namespace RoomPlanner
                     Room room1 = new Room(this);
                     break;
                 case "CreateCupboardButton":
-                    Rectangle room = new Rectangle()
-                    {
-                        Width = 100,
-                        Height = 50,
-                        Stroke = Brushes.Black,
-                        Fill = Brushes.Black
-                    };
-                    Canvas.SetLeft(room, 800);
-                    //Canvas.SetRight(room, 900);
-                    Canvas.SetTop(room, 500);
-                    WorkTable.Children.Add(room);
-                    ttop = Canvas.GetTop(room);
-                    lleft = Canvas.GetLeft(room);
-                    room.MouseLeftButtonDown += ClickOnObject;
-                    //room.MouseMove += MoveObject;
-                    room.MouseLeftButtonUp += DeclineObject;
-                    //room.AddHandler(Rectangle.MouseLeftButtonUpEvent, new MouseButtonEventHandler(Rectangle_MouseLeftButtonUp));
+                    Wardrobe wardrobe = new Wardrobe(this);
                     break;
             }
         }
 
-        private FrameworkElement currobj = null;
-        public double deltaX, deltaY, lleft, ttop;
-        /// <summary>
-        /// Нажатие на объект
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void ClickOnObject(object sender, MouseButtonEventArgs e)
-        {
-            currobj = (FrameworkElement)sender;
-            ttop = Canvas.GetTop(currobj);
-            lleft = Canvas.GetLeft(currobj);
-
-            //Vector offset = VisualTreeHelper.GetOffset(currobj);
-            //lleft = offset.X;
-            //ttop = offset.Y;
-
-            //Point p = currobj.TranslatePoint(new Point(0, 0), currobj);
-            //double currentLeft = p.X;
-            //double currentTop = p.Y;
-
-            Point point = e.GetPosition(WorkTable);
-            deltaX = point.X;
-            deltaY = point.Y;
-        }
-
-        public void DeclineObject(object sender, MouseButtonEventArgs e)
-        {
-            currobj = null;
-        }
 
         private void CompleteButton_Click(object sender, RoutedEventArgs e)
         {
@@ -157,17 +111,5 @@ namespace RoomPlanner
             p.MouseLeftButtonUp += DeclineObject;
         }
 
-        private void Window_MouseMove(object sender, MouseEventArgs e)
-        {
-            Point point = e.GetPosition(WorkTable);
-            if (currobj != null)
-            {
-                Canvas.SetTop(currobj, point.Y - deltaY + ttop);
-                Canvas.SetLeft(currobj, point.X - deltaX + lleft);
-
-                Console.WriteLine("x = " + point.X.ToString() + "  + delX = " + (point.X + deltaX) + "  top=" + ttop.ToString() + "  left=" + lleft.ToString());
-                //Console.WriteLine(currobj.Margin.Top.ToString() + " " + currobj.Margin.Left.ToString() + " " + point.X.ToString() + " " + point.Y.ToString() + " ");
-            }
-        }
     }
 }
