@@ -15,20 +15,23 @@ namespace RoomPlanner
     {
         protected int width;
         protected int height;
-        public abstract int Width { get; set; }
-        public abstract int Height { get; set; }
+        public virtual int Width { get; set; }
+        public virtual int Height { get; set; }
+        public bool isSelected = false;
 
         public MainWindow mainWindow;
+        public FrameworkElement frameworkElement;
 
         public void ClickOnElement(object sender, MouseButtonEventArgs e)
         {
-            mainWindow.selectedElement = (FrameworkElement)sender;
+            mainWindow.lockedElement = this;
+            mainWindow.lockedElement.isSelected = true;
             mainWindow.PropertyList.Visibility = Visibility.Visible;
-            mainWindow.ObjHeight.Text = Convert.ToString(mainWindow.selectedElement.Height);
-            mainWindow.ObjWidth.Text = Convert.ToString(mainWindow.selectedElement.Width);
+            mainWindow.ObjHeight.Text = Convert.ToString(mainWindow.lockedElement.Height);
+            mainWindow.ObjWidth.Text = Convert.ToString(mainWindow.lockedElement.Width);
 
-            mainWindow.ttop = Canvas.GetTop(mainWindow.selectedElement);
-            mainWindow.lleft = Canvas.GetLeft(mainWindow.selectedElement);
+            mainWindow.ttop = Canvas.GetTop(mainWindow.lockedElement.frameworkElement);
+            mainWindow.lleft = Canvas.GetLeft(mainWindow.lockedElement.frameworkElement);
 
             Point point = e.GetPosition(mainWindow.WorkTable);
             mainWindow.deltaX = point.X;
@@ -37,7 +40,7 @@ namespace RoomPlanner
 
         public void DeclineElement(object sender, MouseButtonEventArgs e)
         {
-            mainWindow.selectedElement = null;
+            mainWindow.lockedElement = null;
         }
     }
 
@@ -56,12 +59,12 @@ namespace RoomPlanner
                 Stroke = Brushes.Black,
                 StrokeThickness = 20
             };
+            this.frameworkElement = element;
             Canvas.SetLeft(element, (mainWindow.WorkTable.ActualWidth - width) / 2);
             Canvas.SetTop(element, (mainWindow.WorkTable.ActualHeight - height) / 2);
             element.MouseLeftButtonDown += ClickOnElement;
             element.MouseLeftButtonUp += DeclineElement;
             mainWindow.WorkTable.Children.Add(element);
-
         }
 
         public override int Width
@@ -103,6 +106,7 @@ namespace RoomPlanner
                 Stroke = Brushes.Black,
                 Fill = Brushes.Black
             };
+            this.frameworkElement = element;
             Canvas.SetLeft(element, (mainWindow.WorkTable.ActualWidth - width) / 2);
             Canvas.SetTop(element, (mainWindow.WorkTable.ActualHeight - height) / 2);
             mainWindow.WorkTable.Children.Add(element);
@@ -171,6 +175,7 @@ namespace RoomPlanner
             element.Stroke = Brushes.Green;
             element.StrokeThickness = 10;
             mainWindow.WorkTable.Children.Add(element);
+            this.frameworkElement = element;
 
             Canvas.SetLeft(element, (mainWindow.WorkTable.ActualWidth - width) / 2);
             Canvas.SetTop(element, (mainWindow.WorkTable.ActualHeight - height) / 2);
@@ -211,26 +216,28 @@ namespace RoomPlanner
         {
             this.mainWindow = mainWindow;
 
-            Path myPath = new Path();
-            myPath.Stroke = Brushes.Black;
-            myPath.StrokeThickness = 1;
+            Path element = new Path();
+            element.Stroke = Brushes.Black;
+            element.StrokeThickness = 1;
             SolidColorBrush mySolidColorBrush = new SolidColorBrush();
             mySolidColorBrush.Color = Color.FromArgb(255, 204, 204, 255);
-            myPath.Fill = mySolidColorBrush;
+            element.Fill = mySolidColorBrush;
 
             RectangleGeometry myRectGeometry = new RectangleGeometry();
-            myRectGeometry.Rect = new Rect(30, 55, 100, 150);
+            myRectGeometry.Rect = new Rect(-50, -75, 100, 150);
 
-            GeometryGroup myGeometryGroup = new GeometryGroup();
-            myGeometryGroup.Children.Add(myRectGeometry);
-            myPath.Data = myGeometryGroup;
+            element.Data = myRectGeometry;
+            //GeometryGroup myGeometryGroup = new GeometryGroup();
+            //myGeometryGroup.Children.Add(myRectGeometry);
+            //myPath.Data = myGeometryGroup;
+            this.frameworkElement = element;
 
-            Canvas.SetLeft(myPath, (mainWindow.WorkTable.ActualWidth - width) / 2);
-            Canvas.SetTop(myPath, (mainWindow.WorkTable.ActualHeight - height) / 2);
-            mainWindow.WorkTable.Children.Add(myPath);
+            Canvas.SetLeft(element, (mainWindow.WorkTable.ActualWidth - width) / 2);
+            Canvas.SetTop(element, (mainWindow.WorkTable.ActualHeight - height) / 2);
+            mainWindow.WorkTable.Children.Add(element);
 
-            myPath.MouseLeftButtonDown += ClickOnElement;
-            myPath.MouseLeftButtonUp += DeclineElement;
+            element.MouseLeftButtonDown += ClickOnElement;
+            element.MouseLeftButtonUp += DeclineElement;
         }
 
         public override int Width

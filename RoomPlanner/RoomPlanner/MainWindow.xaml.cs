@@ -22,7 +22,7 @@ namespace RoomPlanner
             InitializeComponent();
         }
 
-        public FrameworkElement selectedElement;
+        public Element lockedElement;
         public double deltaX, deltaY, lleft, ttop;
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -48,10 +48,10 @@ namespace RoomPlanner
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
             Point point = e.GetPosition(WorkTable);
-            if (selectedElement != null)
+            if (lockedElement != null)
             {
-                Canvas.SetTop(selectedElement, point.Y - deltaY + ttop);
-                Canvas.SetLeft(selectedElement, point.X - deltaX + lleft);
+                Canvas.SetTop(lockedElement.frameworkElement, point.Y - deltaY + ttop);
+                Canvas.SetLeft(lockedElement.frameworkElement, point.X - deltaX + lleft);
 
                 Console.WriteLine("x = " + point.X.ToString() + "  + delX = " + (point.X + deltaX) +
                     "  top=" + ttop.ToString() + "  left=" + lleft.ToString());
@@ -60,7 +60,7 @@ namespace RoomPlanner
 
         private void CompleteButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            lockedElement.Width = Convert.ToInt32(ObjWidth.Text);
         }
     }
 }
