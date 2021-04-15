@@ -11,23 +11,17 @@ using System.Windows.Controls;
 
 namespace RoomPlanner
 {
-    abstract public class Element // родительский класс для разработки элементов
-    {                                   // элемент - объект на чертеже (прим.: комната, стул, стол)
+    abstract public class Element
+    {
         protected int width;
         protected int height;
         public abstract int Width { get; set; }
         public abstract int Height { get; set; }
-        public bool isSelected = false;
 
         public MainWindow mainWindow;
 
-        public void ClickOnElement(object sender, MouseButtonEventArgs e)
-        {
-            FrameworkElement selectedElement = (FrameworkElement)sender;
-            mainWindow.PropertyList.Visibility = Visibility.Visible;
-            mainWindow.ObjHeight.Text = Convert.ToString(selectedElement.Height);
-            mainWindow.ObjWidth.Text = Convert.ToString(selectedElement.Width);
-        }
+        public abstract void ClickOnElement(object sender, MouseButtonEventArgs e);
+        //public abstract void Btn_OnMouseDown(object sender, MouseButtonEventArgs e);
     }
 
     public class Room : Element
@@ -46,8 +40,23 @@ namespace RoomPlanner
             };
             Canvas.SetLeft(element, (mainWindow.WorkTable.ActualWidth - width) / 2);
             Canvas.SetTop(element, (mainWindow.WorkTable.ActualHeight - height) / 2);
-            element.MouseLeftButtonUp += ClickOnElement;
+            element.AddHandler(Rectangle.MouseLeftButtonUpEvent, new MouseButtonEventHandler(ClickOnElement));
+            //element.AddHandler(Rectangle.MouseLeftButtonUpEvent, new MouseButtonEventHandler(Btn_OnMouseDown));
             mainWindow.WorkTable.Children.Add(element);
+
+        }
+        private object currobj = null;
+        public override void ClickOnElement(object sender, MouseButtonEventArgs e)
+        {
+            Rectangle selectedElement = (Rectangle)sender;
+            mainWindow.PropertyList.Visibility = Visibility.Visible;
+            mainWindow.ObjHeight.Text = Convert.ToString(selectedElement.Height);
+            mainWindow.ObjWidth.Text = Convert.ToString(selectedElement.Width);
+        }
+
+        private void MouseEvent(object sender, MouseEventArgs e)
+        {
+            currobj = sender;
         }
 
         public override int Width
@@ -74,4 +83,5 @@ namespace RoomPlanner
             }
         }
     }
+
 }

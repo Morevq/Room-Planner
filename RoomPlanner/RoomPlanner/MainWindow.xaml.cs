@@ -25,7 +25,7 @@ namespace RoomPlanner
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
-            switch(button.Name)
+            switch (button.Name)
             {
                 case "CreateRoomButton":
                     Room room1 = new Room(this);
@@ -39,15 +39,20 @@ namespace RoomPlanner
                         Fill = Brushes.Black
                     };
                     Canvas.SetLeft(room, 800);
-                    Canvas.SetRight(room, 900);
+                    //Canvas.SetRight(room, 900);
                     Canvas.SetTop(room, 500);
                     WorkTable.Children.Add(room);
+                    ttop = Canvas.GetTop(room);
+                    lleft = Canvas.GetLeft(room);
                     room.MouseLeftButtonDown += ClickOnObject;
+                    //room.MouseMove += MoveObject;
                     room.MouseLeftButtonUp += DeclineObject;
+                    //room.AddHandler(Rectangle.MouseLeftButtonUpEvent, new MouseButtonEventHandler(Rectangle_MouseLeftButtonUp));
                     break;
             }
         }
         private FrameworkElement currobj = null;
+        public double deltaX, deltaY, lleft, ttop;
         /// <summary>
         /// Нажатие на объект
         /// </summary>
@@ -56,21 +61,25 @@ namespace RoomPlanner
         public void ClickOnObject(object sender, MouseButtonEventArgs e)
         {
             currobj = (FrameworkElement)sender;
+            ttop = Canvas.GetTop(currobj);
+            lleft = Canvas.GetLeft(currobj);
+
+            //Vector offset = VisualTreeHelper.GetOffset(currobj);
+            //lleft = offset.X;
+            //ttop = offset.Y;
+
+            //Point p = currobj.TranslatePoint(new Point(0, 0), currobj);
+            //double currentLeft = p.X;
+            //double currentTop = p.Y;
+
+            Point point = e.GetPosition(WorkTable);
+            deltaX = point.X;
+            deltaY = point.Y;
         }
 
         public void DeclineObject(object sender, MouseButtonEventArgs e)
         {
             currobj = null;
-        }
-
-        private void Window_MouseMove(object sender, MouseEventArgs e)
-        {
-            Point point = e.GetPosition(WorkTable);
-            if (currobj != null)
-            {
-                Canvas.SetTop(currobj, point.Y);
-                Canvas.SetLeft(currobj, point.X);
-            }
         }
 
         private void CompleteButton_Click(object sender, RoutedEventArgs e)
@@ -79,7 +88,38 @@ namespace RoomPlanner
             //room.Width = Convert.ToDouble(ObjWidth.Text);
             ObjHeight.Background = Brushes.White;
             ObjWidth.Background = Brushes.White;
-            PropertyList.Visibility = Visibility.Hidden;
+            //PropertyList.Visibility = Visibility.Hidden;
+        }
+
+        private void CreateBadButton_Click(object sender, RoutedEventArgs e)
+        {
+            Path myPath = new Path();
+            myPath.Stroke = Brushes.Black;
+            myPath.StrokeThickness = 1;
+            SolidColorBrush mySolidColorBrush = new SolidColorBrush();
+            mySolidColorBrush.Color = Color.FromArgb(255, 204, 204, 255);
+            myPath.Fill = mySolidColorBrush;
+
+            RectangleGeometry myRectGeometry = new RectangleGeometry();
+            myRectGeometry.Rect = new Rect(30, 55, 100, 150);
+
+            GeometryGroup myGeometryGroup = new GeometryGroup();
+            myGeometryGroup.Children.Add(myRectGeometry);
+            myPath.Data = myGeometryGroup;
+
+            StackPanel mainPanel = new StackPanel();
+            mainPanel.Children.Add(myPath);
+            //Canvas.SetLeft(myPath, 100);
+            //Canvas.SetTop(myPath, 100);
+            //ttop = Canvas.GetTop(mainPanel);
+            //lleft = Canvas.GetLeft(mainPanel);
+            //Canvas.SetLeft(mainPanel, 150);
+            //Canvas.SetTop(mainPanel, 150);
+            WorkTable.Children.Add(mainPanel);
+
+
+            myPath.MouseLeftButtonDown += ClickOnObject;
+            myPath.MouseLeftButtonUp += DeclineObject;
         }
 
         private void CreateDoorButton_Click(object sender, RoutedEventArgs e)
@@ -118,6 +158,26 @@ namespace RoomPlanner
             WorkTable.Children.Add(p);
             p.MouseLeftButtonDown += ClickOnObject;
             p.MouseLeftButtonUp += DeclineObject;
+        }
+
+        private void Window_MouseMove(object sender, MouseEventArgs e)
+        {
+            Point point = e.GetPosition(WorkTable);
+            if (currobj != null)
+            {
+                Canvas.SetTop(currobj, point.Y - deltaY + ttop);
+                Canvas.SetLeft(currobj, point.X - deltaX + lleft);
+
+                //= new Thickness(point.X, point.Y, 0, 0);
+                Console.WriteLine("x = " + point.X.ToString() + "  + delX = " + (point.X + deltaX) + "  top=" + ttop.ToString() + "  left=" + lleft.ToString());
+                //Console.WriteLine(currobj.Margin.Top.ToString() + " " + currobj.Margin.Left.ToString() + " " + point.X.ToString() + " " + point.Y.ToString() + " ");
+            }
+            //MessageBox.Show(currobj.Margin.Top);
+            //Console.WriteLine(currobj.Margin.Top);
+            //currobj.Margin.Left
+            //Top
+            //currobj.GetType().GetProperty("Location").SetValue(currobj, new Point(point.X, point.Y - 50));
+
         }
     }
 }

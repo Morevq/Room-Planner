@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RoomPlanner"
         mc:Ignorable="d"
-        Title="MainWindow" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" ResizeMode="CanMinimize" MouseMove="Window_MouseMove">
+        Title="MainWindow" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" MouseMove="Window_MouseMove" ResizeMode="CanMinimize">
     <Grid x:Name="Grid" Background="#FFD7D7D7" Width="1280" Height="720">
         <Canvas x:Name="WorkTable" Margin="200,30,200,0"/>
         <Grid x:Name="SettingsPanel" VerticalAlignment="Top" Height="30" Background="#FF323232"/>
@@ -27,8 +27,9 @@
             <Button x:Name="CreateRoomButton" Content="Комната" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="1" Click="Button_Click"/>
             <Button x:Name="CreateDoorButton" Content="Дверь" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="2" Click="CreateDoorButton_Click"/>
             <Button x:Name="CreateCupboardButton" Content="Шкаф" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="3" Click="Button_Click"/>
+            <Button x:Name="CreateBadButton" Content="Кровать" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="4" Click="CreateBadButton_Click"/>
         </SelectiveScrollingGrid>
-        <SelectiveScrollingGrid x:Name="PropertyList" HorizontalAlignment="Right" Margin="1030,30,0,0" Width="200" Background="#FFF0F0F0">
+        <SelectiveScrollingGrid x:Name="PropertyList" HorizontalAlignment="Right" Margin="1030,30,0,0" Width="200" Background="#FFF0F0F0" Visibility="Hidden">
             <SelectiveScrollingGrid.RowDefinitions>
                 <RowDefinition Height="20"/>
                 <RowDefinition/>
