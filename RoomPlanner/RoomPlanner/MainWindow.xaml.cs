@@ -22,13 +22,16 @@ namespace RoomPlanner
             InitializeComponent();
         }
 
+        public FrameworkElement selectedElement;
+        public double deltaX, deltaY, lleft, ttop;
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
             switch (button.Name)
             {
                 case "CreateRoomButton":
-                    Room room1 = new Room(this);
+                    Room room = new Room(this);
                     break;
                 case "CreateCupboardButton":
                     Wardrobe wardrobe = new Wardrobe(this);
@@ -36,6 +39,18 @@ namespace RoomPlanner
             }
         }
 
+        private void Window_MouseMove(object sender, MouseEventArgs e)
+        {
+            Point point = e.GetPosition(WorkTable);
+            if (selectedElement != null)
+            {
+                Canvas.SetTop(selectedElement, point.Y - deltaY + ttop);
+                Canvas.SetLeft(selectedElement, point.X - deltaX + lleft);
+
+                Console.WriteLine("x = " + point.X.ToString() + "  + delX = " + (point.X + deltaX) +
+                    "  top=" + ttop.ToString() + "  left=" + lleft.ToString());
+            }
+        }
 
         private void CompleteButton_Click(object sender, RoutedEventArgs e)
         {
@@ -69,8 +84,8 @@ namespace RoomPlanner
             WorkTable.Children.Add(mainPanel);
 
 
-            myPath.MouseLeftButtonDown += ClickOnObject;
-            myPath.MouseLeftButtonUp += DeclineObject;
+            //myPath.MouseLeftButtonDown += ClickOnObject;
+            //myPath.MouseLeftButtonUp += DeclineObject;
         }
 
         private void CreateDoorButton_Click(object sender, RoutedEventArgs e)
@@ -107,8 +122,8 @@ namespace RoomPlanner
             Canvas.SetLeft(p, 50);
             Canvas.SetTop(p, 50);
             WorkTable.Children.Add(p);
-            p.MouseLeftButtonDown += ClickOnObject;
-            p.MouseLeftButtonUp += DeclineObject;
+            //p.MouseLeftButtonDown += ClickOnObject;
+            //p.MouseLeftButtonUp += DeclineObject;
         }
 
     }

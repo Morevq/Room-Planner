@@ -22,47 +22,22 @@ namespace RoomPlanner
 
         public void ClickOnElement(object sender, MouseButtonEventArgs e)
         {
-            FrameworkElement selectedElement = (FrameworkElement)sender;
+            mainWindow.selectedElement = (FrameworkElement)sender;
             mainWindow.PropertyList.Visibility = Visibility.Visible;
-            mainWindow.ObjHeight.Text = Convert.ToString(selectedElement.Height);
-            mainWindow.ObjWidth.Text = Convert.ToString(selectedElement.Width);
+            mainWindow.ObjHeight.Text = Convert.ToString(mainWindow.selectedElement.Height);
+            mainWindow.ObjWidth.Text = Convert.ToString(mainWindow.selectedElement.Width);
+
+            mainWindow.ttop = Canvas.GetTop(mainWindow.selectedElement);
+            mainWindow.lleft = Canvas.GetLeft(mainWindow.selectedElement);
+
+            Point point = e.GetPosition(mainWindow.WorkTable);
+            mainWindow.deltaX = point.X;
+            mainWindow.deltaY = point.Y;
         }
 
-        private FrameworkElement currobj = null;
-        public double deltaX, deltaY, lleft, ttop;
-        /// <summary>
-        /// Нажатие на объект
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void ClickOnObject(object sender, MouseButtonEventArgs e)
+        public void DeclineElement(object sender, MouseButtonEventArgs e)
         {
-            currobj = (FrameworkElement)sender;
-            ttop = Canvas.GetTop(currobj);
-            lleft = Canvas.GetLeft(currobj);
-
-            Point point = e.GetPosition(WorkTable);
-            deltaX = point.X;
-            deltaY = point.Y;
-        }
-
-        public void DeclineObject(object sender, MouseButtonEventArgs e)
-        {
-            currobj = null;
-        }
-
-
-        private void Window_MouseMove(object sender, MouseEventArgs e)
-        {
-            Point point = e.GetPosition(WorkTable);
-            if (currobj != null)
-            {
-                Canvas.SetTop(currobj, point.Y - deltaY + ttop);
-                Canvas.SetLeft(currobj, point.X - deltaX + lleft);
-
-                Console.WriteLine("x = " + point.X.ToString() + "  + delX = " + (point.X + deltaX) + "  top=" + ttop.ToString() + "  left=" + lleft.ToString());
-                //Console.WriteLine(currobj.Margin.Top.ToString() + " " + currobj.Margin.Left.ToString() + " " + point.X.ToString() + " " + point.Y.ToString() + " ");
-            }
+            mainWindow.selectedElement = null;
         }
     }
 
@@ -82,7 +57,8 @@ namespace RoomPlanner
             };
             Canvas.SetLeft(element, (mainWindow.WorkTable.ActualWidth - width) / 2);
             Canvas.SetTop(element, (mainWindow.WorkTable.ActualHeight - height) / 2);
-            element.AddHandler(Rectangle.MouseLeftButtonUpEvent, new MouseButtonEventHandler(ClickOnElement));
+            element.MouseLeftButtonDown += ClickOnElement;
+            element.MouseLeftButtonUp += DeclineElement;
             mainWindow.WorkTable.Children.Add(element);
 
         }
@@ -112,7 +88,6 @@ namespace RoomPlanner
         }
     }
 
-
     public class Wardrobe : Element
     {
         public Wardrobe(MainWindow mainWindow, int width = 100, int height = 50)
@@ -129,10 +104,9 @@ namespace RoomPlanner
             };
             Canvas.SetLeft(element, (mainWindow.WorkTable.ActualWidth - width) / 2);
             Canvas.SetTop(element, (mainWindow.WorkTable.ActualHeight - height) / 2);
-            element.AddHandler(Rectangle.MouseLeftButtonUpEvent, new MouseButtonEventHandler(ClickOnElement));
             mainWindow.WorkTable.Children.Add(element);
-            element.MouseLeftButtonDown += ClickOnObject;
-            element.MouseLeftButtonUp += DeclineObject;
+            element.MouseLeftButtonDown += ClickOnElement;
+            element.MouseLeftButtonUp += DeclineElement;
         }
 
         public override int Width
