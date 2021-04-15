@@ -51,6 +51,7 @@ namespace RoomPlanner
                     break;
             }
         }
+
         private FrameworkElement currobj = null;
         public double deltaX, deltaY, lleft, ttop;
         /// <summary>
@@ -84,14 +85,10 @@ namespace RoomPlanner
 
         private void CompleteButton_Click(object sender, RoutedEventArgs e)
         {
-            //room.Height = Convert.ToDouble(ObjHeight.Text);
-            //room.Width = Convert.ToDouble(ObjWidth.Text);
-            ObjHeight.Background = Brushes.White;
-            ObjWidth.Background = Brushes.White;
-            //PropertyList.Visibility = Visibility.Hidden;
+            
         }
 
-        private void CreateBadButton_Click(object sender, RoutedEventArgs e)
+        private void CreateBedButton_Click(object sender, RoutedEventArgs e)
         {
             Path myPath = new Path();
             myPath.Stroke = Brushes.Black;
@@ -168,16 +165,9 @@ namespace RoomPlanner
                 Canvas.SetTop(currobj, point.Y - deltaY + ttop);
                 Canvas.SetLeft(currobj, point.X - deltaX + lleft);
 
-                //= new Thickness(point.X, point.Y, 0, 0);
                 Console.WriteLine("x = " + point.X.ToString() + "  + delX = " + (point.X + deltaX) + "  top=" + ttop.ToString() + "  left=" + lleft.ToString());
                 //Console.WriteLine(currobj.Margin.Top.ToString() + " " + currobj.Margin.Left.ToString() + " " + point.X.ToString() + " " + point.Y.ToString() + " ");
             }
-            //MessageBox.Show(currobj.Margin.Top);
-            //Console.WriteLine(currobj.Margin.Top);
-            //currobj.Margin.Left
-            //Top
-            //currobj.GetType().GetProperty("Location").SetValue(currobj, new Point(point.X, point.Y - 50));
-
         }
     }
 }

@@ -20,8 +20,13 @@ namespace RoomPlanner
 
         public MainWindow mainWindow;
 
-        public abstract void ClickOnElement(object sender, MouseButtonEventArgs e);
-        //public abstract void Btn_OnMouseDown(object sender, MouseButtonEventArgs e);
+        public void ClickOnElement(object sender, MouseButtonEventArgs e)
+        {
+            Rectangle selectedElement = (Rectangle)sender;
+            mainWindow.PropertyList.Visibility = Visibility.Visible;
+            mainWindow.ObjHeight.Text = Convert.ToString(selectedElement.Height);
+            mainWindow.ObjWidth.Text = Convert.ToString(selectedElement.Width);
+        }
     }
 
     public class Room : Element
@@ -41,22 +46,8 @@ namespace RoomPlanner
             Canvas.SetLeft(element, (mainWindow.WorkTable.ActualWidth - width) / 2);
             Canvas.SetTop(element, (mainWindow.WorkTable.ActualHeight - height) / 2);
             element.AddHandler(Rectangle.MouseLeftButtonUpEvent, new MouseButtonEventHandler(ClickOnElement));
-            //element.AddHandler(Rectangle.MouseLeftButtonUpEvent, new MouseButtonEventHandler(Btn_OnMouseDown));
             mainWindow.WorkTable.Children.Add(element);
 
-        }
-        private object currobj = null;
-        public override void ClickOnElement(object sender, MouseButtonEventArgs e)
-        {
-            Rectangle selectedElement = (Rectangle)sender;
-            mainWindow.PropertyList.Visibility = Visibility.Visible;
-            mainWindow.ObjHeight.Text = Convert.ToString(selectedElement.Height);
-            mainWindow.ObjWidth.Text = Convert.ToString(selectedElement.Width);
-        }
-
-        private void MouseEvent(object sender, MouseEventArgs e)
-        {
-            currobj = sender;
         }
 
         public override int Width
