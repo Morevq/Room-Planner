@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RoomPlanner"
         mc:Ignorable="d"
-        Title="MainWindow" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" MouseMove="Window_MouseMove" ResizeMode="CanMinimize">
+        Title="MainWindow" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" ResizeMode="CanMinimize">
     <Grid x:Name="Grid" Background="#FFD7D7D7" Width="1280" Height="720">
         <Canvas x:Name="WorkTable" Margin="200,30,200,0"/>
         <Grid x:Name="SettingsPanel" VerticalAlignment="Top" Height="30" Background="#FF323232"/>

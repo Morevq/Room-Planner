@@ -22,10 +22,10 @@ namespace RoomPlanner
             InitializeComponent();
         }
 
-        public Element lockedElement;
-        public double deltaX, deltaY, lleft, ttop;
+        public Element lockedElement; //текущий выбранный объект
+        public double deltaX, deltaY, lleft, ttop; //поля для корректного перетаскивания объектов
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e) //обработчик события нажатия на кнопки из списка объектов слева
         {
             Button button = (Button)sender;
             switch (button.Name)
@@ -45,13 +45,13 @@ namespace RoomPlanner
             }
         }
 
-        private void Window_MouseMove(object sender, MouseEventArgs e)
+        public void Window_MouseMove(object sender, MouseEventArgs e) //реализия перетаскивания объектов
         {
             Point point = e.GetPosition(WorkTable);
             if (lockedElement != null)
             {
-                Canvas.SetTop(lockedElement.frameworkElement, point.Y - deltaY + ttop);
-                Canvas.SetLeft(lockedElement.frameworkElement, point.X - deltaX + lleft);
+                Canvas.SetTop(lockedElement.shape, point.Y - deltaY + ttop);
+                Canvas.SetLeft(lockedElement.shape, point.X - deltaX + lleft);
 
                 Console.WriteLine("x = " + point.X.ToString() + "  + delX = " + (point.X + deltaX) +
                     "  top=" + ttop.ToString() + "  left=" + lleft.ToString());

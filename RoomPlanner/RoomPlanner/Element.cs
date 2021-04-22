@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace RoomPlanner
 {
@@ -17,30 +18,59 @@ namespace RoomPlanner
         protected int height;
         public virtual int Width { get; set; }
         public virtual int Height { get; set; }
-        public bool isSelected = false;
+        protected bool isSelected = false;
+        public virtual bool IsSelected
+        {
+            get
+            {
+                return isSelected;
+            }
+            set
+            {
+                Brush brush = value ? Brushes.DarkBlue : Brushes.Black;
+                shape.Stroke = brush;
+                isSelected = value;
+            }
+        }
+        public bool isDragged = false;
 
         public MainWindow mainWindow;
-        public FrameworkElement frameworkElement;
+        public Shape shape;
 
         public void ClickOnElement(object sender, MouseButtonEventArgs e)
         {
-            mainWindow.lockedElement = this;
-            mainWindow.lockedElement.isSelected = true;
-            mainWindow.PropertyList.Visibility = Visibility.Visible;
-            mainWindow.ObjHeight.Text = Convert.ToString(mainWindow.lockedElement.Height);
-            mainWindow.ObjWidth.Text = Convert.ToString(mainWindow.lockedElement.Width);
+            if (IsSelected)
+            {
+                if (mainWindow.lockedElement != null) mainWindow.lockedElement.IsSelected = false;
+                mainWindow.lockedElement = this;
+                mainWindow.MouseMove += mainWindow.Window_MouseMove;
 
-            mainWindow.ttop = Canvas.GetTop(mainWindow.lockedElement.frameworkElement);
-            mainWindow.lleft = Canvas.GetLeft(mainWindow.lockedElement.frameworkElement);
+                mainWindow.ttop = Canvas.GetTop(mainWindow.lockedElement.shape);
+                mainWindow.lleft = Canvas.GetLeft(mainWindow.lockedElement.shape);
 
-            Point point = e.GetPosition(mainWindow.WorkTable);
-            mainWindow.deltaX = point.X;
-            mainWindow.deltaY = point.Y;
+                Point point = e.GetPosition(mainWindow.WorkTable);
+                isDragged = true;
+                mainWindow.deltaX = point.X;
+                mainWindow.deltaY = point.Y;
+            }
+            else
+            {
+                if (mainWindow.lockedElement != null) mainWindow.lockedElement.IsSelected = false;
+                mainWindow.lockedElement = this;
+                mainWindow.lockedElement.IsSelected = true;
+                mainWindow.PropertyList.Visibility = Visibility.Visible;
+                mainWindow.ObjHeight.Text = Convert.ToString(mainWindow.lockedElement.Height);
+                mainWindow.ObjWidth.Text = Convert.ToString(mainWindow.lockedElement.Width);
+            }
         }
 
         public void DeclineElement(object sender, MouseButtonEventArgs e)
         {
-            mainWindow.lockedElement = null;
+            if (mainWindow.lockedElement.isDragged)
+            {
+                mainWindow.lockedElement = null;
+                isDragged = false;
+            }
         }
     }
 
@@ -59,7 +89,7 @@ namespace RoomPlanner
                 Stroke = Brushes.Black,
                 StrokeThickness = 20
             };
-            this.frameworkElement = element;
+            shape = element;
             Canvas.SetLeft(element, (mainWindow.WorkTable.ActualWidth - width) / 2);
             Canvas.SetTop(element, (mainWindow.WorkTable.ActualHeight - height) / 2);
             element.MouseLeftButtonDown += ClickOnElement;
@@ -104,9 +134,10 @@ namespace RoomPlanner
                 Width = Width,
                 Height = Height,
                 Stroke = Brushes.Black,
-                Fill = Brushes.Black
+                Fill = Brushes.Gray,
+                StrokeThickness = 2
             };
-            this.frameworkElement = element;
+            shape = element;
             Canvas.SetLeft(element, (mainWindow.WorkTable.ActualWidth - width) / 2);
             Canvas.SetTop(element, (mainWindow.WorkTable.ActualHeight - height) / 2);
             mainWindow.WorkTable.Children.Add(element);
@@ -175,7 +206,7 @@ namespace RoomPlanner
             element.Stroke = Brushes.Green;
             element.StrokeThickness = 10;
             mainWindow.WorkTable.Children.Add(element);
-            this.frameworkElement = element;
+            this.shape = element;
 
             Canvas.SetLeft(element, (mainWindow.WorkTable.ActualWidth - width) / 2);
             Canvas.SetTop(element, (mainWindow.WorkTable.ActualHeight - height) / 2);
@@ -216,21 +247,29 @@ namespace RoomPlanner
         {
             this.mainWindow = mainWindow;
 
-            Path element = new Path();
-            element.Stroke = Brushes.Black;
-            element.StrokeThickness = 1;
-            SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-            mySolidColorBrush.Color = Color.FromArgb(255, 204, 204, 255);
-            element.Fill = mySolidColorBrush;
+            GeometryGroup geometryGroup = new GeometryGroup();
+            geometryGroup.FillRule = FillRule.Nonzero;
+            Path element = new Path()
+            {
+                Stroke = Brushes.Black,
+                Fill = Brushes.Gray,
+                StrokeThickness = 2
+            };
 
-            RectangleGeometry myRectGeometry = new RectangleGeometry();
-            myRectGeometry.Rect = new Rect(-50, -75, 100, 150);
+            RectangleGeometry rectGeometry0 = new RectangleGeometry();
+            rectGeometry0.Rect = new Rect(-50, -75, 100, 150);
+            geometryGroup.Children.Add(rectGeometry0);
 
-            element.Data = myRectGeometry;
-            //GeometryGroup myGeometryGroup = new GeometryGroup();
-            //myGeometryGroup.Children.Add(myRectGeometry);
-            //myPath.Data = myGeometryGroup;
-            this.frameworkElement = element;
+            RectangleGeometry rectGeometry1 = new RectangleGeometry();
+            rectGeometry1.Rect = new Rect(-44, -70, 40, 30);
+            geometryGroup.Children.Add(rectGeometry1);
+
+            RectangleGeometry rectGeometry2 = new RectangleGeometry();
+            rectGeometry2.Rect = new Rect(4, -70, 40, 30);
+            geometryGroup.Children.Add(rectGeometry2);
+
+            element.Data = geometryGroup;
+            this.shape = element;
 
             Canvas.SetLeft(element, (mainWindow.WorkTable.ActualWidth - width) / 2);
             Canvas.SetTop(element, (mainWindow.WorkTable.ActualHeight - height) / 2);
