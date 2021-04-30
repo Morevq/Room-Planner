@@ -26,8 +26,14 @@
             <Label Content="Ресурсы" FontFamily="Segoe UI Semibold" Padding="5,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="#FF272727" Foreground="White"/>
             <Button x:Name="CreateRoomButton" Content="Комната" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="1" Click="Button_Click"/>
             <Button x:Name="CreateDoorButton" Content="Дверь" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="2" Click="Button_Click"/>
-            <Button x:Name="CreateWardrobeButton" Content="Шкаф" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="3" Click="Button_Click"/>
+            <Button x:Name="CreateWardrobeButton" Content="Шкаф/Тумбочка" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="3" Click="Button_Click"/>
             <Button x:Name="CreateBedButton" Content="Кровать" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="4" Click="Button_Click"/>
+            <Button x:Name="CreateСasementButton" Content="Окно" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="5" Click="Button_Click"/>
+            <Button x:Name="CreateSofaButton" Content="Диван/Кресло" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="6" Click="Button_Click"/>
+            <Button x:Name="CreateBathButton" Content="Ванна" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="7" Click="Button_Click"/>
+            <Button x:Name="CreateDeskButton" Content="Стол?" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="8" Click="Button_Click"/>
+            <Button x:Name="CreateSinkButton" Content="Раковина" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="9" Click="Button_Click"/>
+            <Button x:Name="CreateTvButton" Content="Зеркало/Телевизор" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="10" Click="Button_Click"/>
         </SelectiveScrollingGrid>
         <SelectiveScrollingGrid x:Name="PropertyList" HorizontalAlignment="Right" Margin="1030,30,0,0" Width="200" Background="#FFF0F0F0" Visibility="Hidden">
             <SelectiveScrollingGrid.RowDefinitions>

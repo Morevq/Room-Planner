@@ -42,6 +42,25 @@ namespace RoomPlanner
                 case "CreateBedButton":
                     Bed bed = new Bed(this);
                     break;
+
+                case "CreateСasementButton":
+                    Сasement casement = new Сasement(this);
+                    break;
+                case "CreateSofaButton":
+                    Sofa sofa = new Sofa(this);
+                    break;
+                case "CreateBathButton":
+                    Bath bath = new Bath(this);
+                    break;
+                case "CreateDeskButton":
+                    Desk desk = new Desk(this);
+                    break;
+                case "CreateSinkButton":
+                    Sink sink = new Sink(this);
+                    break;
+                case "CreateTvButton":
+                    Tv tv = new Tv(this);
+                    break;
             }
         }
 

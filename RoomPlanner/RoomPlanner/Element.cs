@@ -12,6 +12,7 @@ using System.Windows.Data;
 
 namespace RoomPlanner
 {
+
     abstract public class Element
     {
         protected int width;
@@ -203,7 +204,7 @@ namespace RoomPlanner
             pathGeom.Figures.Add(arcfrst);
 
             element.Data = pathGeom;
-            element.Stroke = Brushes.Green;
+            element.Stroke = Brushes.Gray;
             element.StrokeThickness = 10;
             mainWindow.WorkTable.Children.Add(element);
             this.shape = element;
@@ -277,6 +278,358 @@ namespace RoomPlanner
 
             element.MouseLeftButtonDown += ClickOnElement;
             element.MouseLeftButtonUp += DeclineElement;
+        }
+
+        public override int Width
+        {
+            get
+            {
+                return width;
+            }
+            set
+            {
+                width = value;
+            }
+        }
+
+        public override int Height
+        {
+            get
+            {
+                return height;
+            }
+            set
+            {
+                height = value;
+            }
+        }
+    }
+
+    public class Сasement : Element
+    {
+        public Сasement(MainWindow mainWindow, int width = 100, int height = 10)
+        {
+            Width = width;
+            Height = height;
+            this.mainWindow = mainWindow;
+
+            Rectangle element = new Rectangle()
+            {
+                Width = Width,
+                Height = Height,
+                Fill = Brushes.Gray,
+                Stroke = Brushes.White,
+                StrokeThickness = 2
+            };
+            shape = element;
+            Canvas.SetLeft(element, (mainWindow.WorkTable.ActualWidth - width) / 2);
+            Canvas.SetTop(element, (mainWindow.WorkTable.ActualHeight - height) / 2);
+            element.MouseLeftButtonDown += ClickOnElement;
+            element.MouseLeftButtonUp += DeclineElement;
+            mainWindow.WorkTable.Children.Add(element);
+        }
+
+        public override int Width
+        {
+            get
+            {
+                return width;
+            }
+            set
+            {
+                width = value;
+            }
+        }
+
+        public override int Height
+        {
+            get
+            {
+                return height;
+            }
+            set
+            {
+                height = value;
+            }
+        }
+    }
+
+
+    public class Sofa : Element
+    {
+        public Sofa(MainWindow mainWindow)
+        {
+            this.mainWindow = mainWindow;
+
+            GeometryGroup geometryGroup = new GeometryGroup();
+            geometryGroup.FillRule = FillRule.Nonzero;
+            Path element = new Path()
+            {
+                Stroke = Brushes.Black,
+                Fill = Brushes.Gray,
+                StrokeThickness = 2
+            };
+
+            RectangleGeometry rectGeometry0 = new RectangleGeometry();
+            rectGeometry0.Rect = new Rect(0, 0, 60, 60);
+            geometryGroup.Children.Add(rectGeometry0);
+
+            RectangleGeometry rectGeometry1 = new RectangleGeometry();
+            rectGeometry1.Rect = new Rect(0, -60, 60, 60);
+            geometryGroup.Children.Add(rectGeometry1);
+
+            RectangleGeometry rectGeometry2 = new RectangleGeometry();
+            rectGeometry2.Rect = new Rect(-20, 60, 80, 20);
+            geometryGroup.Children.Add(rectGeometry2);
+
+            RectangleGeometry rectGeometry3 = new RectangleGeometry();
+            rectGeometry3.Rect = new Rect(-20, -80, 80, 20);
+            geometryGroup.Children.Add(rectGeometry3);
+
+            RectangleGeometry rectGeometry4 = new RectangleGeometry();
+            rectGeometry4.Rect = new Rect(-20, -60, 20, 60);
+            geometryGroup.Children.Add(rectGeometry4);
+
+            RectangleGeometry rectGeometry5 = new RectangleGeometry();
+            rectGeometry5.Rect = new Rect(-20, 0, 20, 60);
+            geometryGroup.Children.Add(rectGeometry5);
+
+            element.Data = geometryGroup;
+            this.shape = element;
+
+            Canvas.SetLeft(element, (mainWindow.WorkTable.ActualWidth - width) / 2);
+            Canvas.SetTop(element, (mainWindow.WorkTable.ActualHeight - height) / 2);
+            mainWindow.WorkTable.Children.Add(element);
+
+            element.MouseLeftButtonDown += ClickOnElement;
+            element.MouseLeftButtonUp += DeclineElement;
+        }
+
+        public override int Width
+        {
+            get
+            {
+                return width;
+            }
+            set
+            {
+                width = value;
+            }
+        }
+
+        public override int Height
+        {
+            get
+            {
+                return height;
+            }
+            set
+            {
+                height = value;
+            }
+        }
+    }
+
+    public class Bath : Element
+    {
+        public Bath(MainWindow mainWindow)
+        {
+            this.mainWindow = mainWindow;
+
+            GeometryGroup geometryGroup = new GeometryGroup();
+            geometryGroup.FillRule = FillRule.Nonzero;
+            Path element = new Path()
+            {
+                Stroke = Brushes.Black,
+                Fill = Brushes.Gray,
+                StrokeThickness = 2
+            };
+
+            RectangleGeometry rectGeometry0 = new RectangleGeometry();
+            rectGeometry0.Rect = new Rect(-50, -75, 100, 50);
+            geometryGroup.Children.Add(rectGeometry0);
+
+            RectangleGeometry rectGeometry1 = new RectangleGeometry();
+            rectGeometry1.Rect = new Rect(-45, -70, 90, 40);
+            geometryGroup.Children.Add(rectGeometry1);
+
+            EllipseGeometry myEllipseGeometry = new EllipseGeometry();
+            myEllipseGeometry.Center = new Point(30, -50);
+            myEllipseGeometry.RadiusX = 3;
+            myEllipseGeometry.RadiusY = 3;
+            geometryGroup.Children.Add(myEllipseGeometry);
+
+            element.Data = geometryGroup;
+            this.shape = element;
+
+            Canvas.SetLeft(element, (mainWindow.WorkTable.ActualWidth - width) / 2);
+            Canvas.SetTop(element, (mainWindow.WorkTable.ActualHeight - height) / 2);
+            mainWindow.WorkTable.Children.Add(element);
+
+            element.MouseLeftButtonDown += ClickOnElement;
+            element.MouseLeftButtonUp += DeclineElement;
+        }
+
+        public override int Width
+        {
+            get
+            {
+                return width;
+            }
+            set
+            {
+                width = value;
+            }
+        }
+
+        public override int Height
+        {
+            get
+            {
+                return height;
+            }
+            set
+            {
+                height = value;
+            }
+        }
+    }
+
+    public class Desk : Element
+    {
+        public Desk(MainWindow mainWindow, int width = 100, int height = 50)
+        {
+            Width = width;
+            Height = height;
+            this.mainWindow = mainWindow;
+            Rectangle element = new Rectangle()
+            {
+                Width = Width,
+                Height = Height,
+                Stroke = Brushes.Black,
+                Fill = Brushes.Gray,
+                StrokeThickness = 2
+            };
+            shape = element;
+            Canvas.SetLeft(element, (mainWindow.WorkTable.ActualWidth - width) / 2);
+            Canvas.SetTop(element, (mainWindow.WorkTable.ActualHeight - height) / 2);
+            mainWindow.WorkTable.Children.Add(element);
+            element.MouseLeftButtonDown += ClickOnElement;
+            element.MouseLeftButtonUp += DeclineElement;
+        }
+
+        public override int Width
+        {
+            get
+            {
+                return width;
+            }
+            set
+            {
+                width = value;
+            }
+        }
+
+        public override int Height
+        {
+            get
+            {
+                return height;
+            }
+            set
+            {
+                height = value;
+            }
+        }
+    }
+
+    public class Sink : Element
+    {
+        public Sink(MainWindow mainWindow)
+        {
+            this.mainWindow = mainWindow;
+
+            GeometryGroup geometryGroup = new GeometryGroup();
+            geometryGroup.FillRule = FillRule.Nonzero;
+            Path element = new Path()
+            {
+                Stroke = Brushes.Black,
+                Fill = Brushes.Gray,
+                StrokeThickness = 2
+            };
+
+            RectangleGeometry rectGeometry0 = new RectangleGeometry();
+            rectGeometry0.Rect = new Rect(4, -63, 50, 40);
+            geometryGroup.Children.Add(rectGeometry0);
+
+            RectangleGeometry rectGeometry1 = new RectangleGeometry();
+            rectGeometry1.Rect = new Rect(9, -58, 40, 30);
+            geometryGroup.Children.Add(rectGeometry1);
+
+            EllipseGeometry myEllipseGeometry = new EllipseGeometry();
+            myEllipseGeometry.Center = new Point(30, -50);
+            myEllipseGeometry.RadiusX = 3;
+            myEllipseGeometry.RadiusY = 3;
+            geometryGroup.Children.Add(myEllipseGeometry);
+
+            element.Data = geometryGroup;
+            this.shape = element;
+
+            Canvas.SetLeft(element, (mainWindow.WorkTable.ActualWidth - width) / 2);
+            Canvas.SetTop(element, (mainWindow.WorkTable.ActualHeight - height) / 2);
+            mainWindow.WorkTable.Children.Add(element);
+
+            element.MouseLeftButtonDown += ClickOnElement;
+            element.MouseLeftButtonUp += DeclineElement;
+        }
+
+        public override int Width
+        {
+            get
+            {
+                return width;
+            }
+            set
+            {
+                width = value;
+            }
+        }
+
+        public override int Height
+        {
+            get
+            {
+                return height;
+            }
+            set
+            {
+                height = value;
+            }
+        }
+    }
+
+    public class Tv : Element
+    {
+        public Tv(MainWindow mainWindow, int width = 100, int height = 10)
+        {
+            Width = width;
+            Height = height;
+            this.mainWindow = mainWindow;
+
+            Rectangle element = new Rectangle()
+            {
+                Width = Width,
+                Height = Height,
+                Fill = Brushes.Gray,
+                Stroke = Brushes.White,
+                StrokeThickness = 2
+            };
+            shape = element;
+            Canvas.SetLeft(element, (mainWindow.WorkTable.ActualWidth - width) / 2);
+            Canvas.SetTop(element, (mainWindow.WorkTable.ActualHeight - height) / 2);
+            element.MouseLeftButtonDown += ClickOnElement;
+            element.MouseLeftButtonUp += DeclineElement;
+            mainWindow.WorkTable.Children.Add(element);
         }
 
         public override int Width
