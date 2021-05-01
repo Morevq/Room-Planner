@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,9 +20,16 @@ namespace RoomPlanner
 {
     public partial class MainWindow : Window
     {
+        public static MainWindow instance;
+        public List<Element> elements;
+        public string pathToFile;
+
         public MainWindow()
         {
+            instance = this;
+            elements = new List<Element>();
             InitializeComponent();
+            MouseMove += Window_MouseMove;
         }
 
         public Element lockedElement; //текущий выбранный объект
@@ -31,35 +41,44 @@ namespace RoomPlanner
             switch (button.Name)
             {
                 case "CreateRoomButton":
-                    Room room = new Room(this);
+                    Room room = new Room();
+                    elements.Add(room);
                     break;
                 case "CreateWardrobeButton":
-                    Wardrobe wardrobe = new Wardrobe(this);
+                    Wardrobe wardrobe = new Wardrobe();
+                    elements.Add(wardrobe);
                     break;
                 case "CreateDoorButton":
-                    Door door = new Door(this);
+                    Door door = new Door();
+                    elements.Add(door);
                     break;
                 case "CreateBedButton":
-                    Bed bed = new Bed(this);
+                    Bed bed = new Bed();
+                    elements.Add(bed);
                     break;
-
                 case "CreateСasementButton":
-                    Сasement casement = new Сasement(this);
+                    Сasement casement = new Сasement();
+                    elements.Add(casement);
                     break;
                 case "CreateSofaButton":
-                    Sofa sofa = new Sofa(this);
+                    Sofa sofa = new Sofa();
+                    elements.Add(sofa);
                     break;
                 case "CreateBathButton":
-                    Bath bath = new Bath(this);
+                    Bath bath = new Bath();
+                    elements.Add(bath);
                     break;
                 case "CreateDeskButton":
-                    Desk desk = new Desk(this);
+                    Desk desk = new Desk();
+                    elements.Add(desk);
                     break;
                 case "CreateSinkButton":
-                    Sink sink = new Sink(this);
+                    Sink sink = new Sink();
+                    elements.Add(sink);
                     break;
                 case "CreateTvButton":
-                    Tv tv = new Tv(this);
+                    Tv tv = new Tv();
+                    elements.Add(tv);
                     break;
             }
         }
@@ -79,7 +98,38 @@ namespace RoomPlanner
 
         private void CompleteButton_Click(object sender, RoutedEventArgs e)
         {
-            lockedElement.Width = Convert.ToInt32(ObjWidth.Text);
+            //lockedElement.Width = Convert.ToInt32(ObjWidth.Text);
+        }
+
+        public void Save(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                pathToFile = saveFileDialog.FileName;
+                BinaryFormatter binaryFormatter = new BinaryFormatter();
+                FileStream fileStream = new FileStream(pathToFile, FileMode.Create, FileAccess.Write);
+                binaryFormatter.Serialize(fileStream, elements);
+                fileStream.Close();
+            }
+        }
+
+        public void Load(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                pathToFile = openFileDialog.FileName;
+                BinaryFormatter binaryFormatter = new BinaryFormatter();
+                FileStream fileStream = new FileStream(pathToFile, FileMode.Open, FileAccess.Read);
+                elements = (List<Element>)binaryFormatter.Deserialize(fileStream);
+                fileStream.Close();
+            }
+        }
+
+        public void New(object sender, RoutedEventArgs e)
+        {
+            elements.Clear();
         }
     }
 }

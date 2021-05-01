@@ -7,9 +7,23 @@
         mc:Ignorable="d"
         Title="MainWindow" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" ResizeMode="CanMinimize">
     <Grid x:Name="Grid" Background="#FFD7D7D7" Width="1280" Height="720">
-        <Canvas x:Name="WorkTable" Margin="200,30,200,0"/>
-        <Grid x:Name="SettingsPanel" VerticalAlignment="Top" Height="30" Background="#FF323232"/>
-        <SelectiveScrollingGrid x:Name="FurnitureList" HorizontalAlignment="Left" Margin="0,30,0,0" Width="200" Background="#FFF0F0F0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="11*"/>
+            <ColumnDefinition Width="69*"/>
+        </Grid.ColumnDefinitions>
+        <Canvas x:Name="WorkTable" Margin="24,30,200,0" Grid.Column="1"/>
+        <Grid x:Name="SettingsPanel" VerticalAlignment="Top" Height="30" Background="#FF323232" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="SaveButton" Content="Сохранить" FontSize="10" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Click="Save" Width="60" Margin="0,5"/>
+            <Button x:Name="LoadButton" Content="Загрузить" FontSize="10" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Click="Load" Width="60" Margin="130,5" Grid.Column="1"/>
+            <Button x:Name="NewButton" Content="Очистить" FontSize="10" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Click="New" Width="60" Margin="130,5" Grid.Column="2"/>
+        </Grid>
+        <SelectiveScrollingGrid x:Name="FurnitureList" HorizontalAlignment="Left" Margin="0,30,0,0" Width="200" Background="#FFF0F0F0" Grid.ColumnSpan="2">
             <SelectiveScrollingGrid.RowDefinitions>
                 <RowDefinition Height="20"/>
                 <RowDefinition/>
@@ -35,7 +49,7 @@
             <Button x:Name="CreateSinkButton" Content="Раковина" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="9" Click="Button_Click"/>
             <Button x:Name="CreateTvButton" Content="Зеркало/Телевизор" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="10" Click="Button_Click"/>
         </SelectiveScrollingGrid>
-        <SelectiveScrollingGrid x:Name="PropertyList" HorizontalAlignment="Right" Margin="1030,30,0,0" Width="200" Background="#FFF0F0F0" Visibility="Hidden">
+        <SelectiveScrollingGrid x:Name="PropertyList" HorizontalAlignment="Right" Margin="0,30,0,0" Width="200" Background="#FFF0F0F0" Grid.Column="1">
             <SelectiveScrollingGrid.RowDefinitions>
                 <RowDefinition Height="20"/>
                 <RowDefinition/>
