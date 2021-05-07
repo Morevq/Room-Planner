@@ -20,40 +20,39 @@ namespace RoomPlanner
         protected int height;
         public virtual int Width { get; set; }
         public virtual int Height { get; set; }
-        protected bool isSelected = false;
-        public virtual bool IsSelected
-        {
-            get
-            {
-                return isSelected;
-            }
-            set
-            {
-                Brush brush = value ? Brushes.DarkBlue : Brushes.Black;
-                shape.Stroke = brush;
-                isSelected = value;
-            }
-        }
+        public bool isSelected = false;
         public bool isDragged = false;
 
         public Shape shape;
 
         public void LeftMouseDown(object sender, MouseButtonEventArgs e)
         {
-            MainWindow.instance.lockedElement = this;
-            MainWindow.instance.ObjHeight.Text = Convert.ToString(MainWindow.instance.lockedElement.Height);
-            MainWindow.instance.ObjWidth.Text = Convert.ToString(MainWindow.instance.lockedElement.Width);
-            MainWindow.instance.ttop = Canvas.GetTop(shape);
-            MainWindow.instance.lleft = Canvas.GetLeft(shape);
+            if (isSelected == true)
+            {
+                MainWindow.instance.MouseMove += MainWindow.instance.Window_MouseMove;
 
-            Point point = e.GetPosition(MainWindow.instance.WorkTable);
-            MainWindow.instance.deltaX = point.X;
-            MainWindow.instance.deltaY = point.Y;
+                MainWindow.instance.ttop = Canvas.GetTop(shape);
+                MainWindow.instance.lleft = Canvas.GetLeft(shape);
+                Point point = e.GetPosition(MainWindow.instance.WorkTable);
+                MainWindow.instance.deltaX = point.X;
+                MainWindow.instance.deltaY = point.Y;
+            }
         }
 
         public void LeftMouseUp(object sender, MouseButtonEventArgs e)
         {
-            MainWindow.instance.lockedElement = null;
+            if (isSelected == false)
+            {
+                MainWindow.instance.lockedElement = this;
+                isSelected = true;
+                MainWindow.instance.PropertyList.Visibility = Visibility.Visible;
+                MainWindow.instance.ObjHeight.Text = Convert.ToString(MainWindow.instance.lockedElement.Height);
+                MainWindow.instance.ObjWidth.Text = Convert.ToString(MainWindow.instance.lockedElement.Width);
+            }
+            else
+            {
+                MainWindow.instance.MouseMove -= MainWindow.instance.Window_MouseMove;
+            }
         }
 
         public void RightMouseUp(object sender, MouseButtonEventArgs e)
