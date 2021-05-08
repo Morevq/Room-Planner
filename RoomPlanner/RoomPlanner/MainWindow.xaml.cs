@@ -101,6 +101,19 @@ namespace RoomPlanner
             //lockedElement.Width = Convert.ToInt32(ObjWidth.Text);
         }
 
+<<<<<<< Updated upstream
+=======
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                lockedElement.IsSelected = false;
+                lockedElement = null;
+                PropertyList.Visibility = Visibility.Hidden;
+            }
+        }
+
+>>>>>>> Stashed changes
         public void Save(object sender, RoutedEventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
