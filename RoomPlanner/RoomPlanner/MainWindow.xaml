@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RoomPlanner"
         mc:Ignorable="d"
-        Title="MainWindow" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" ResizeMode="CanMinimize">
+        Title="RoomPlanner" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" ResizeMode="CanMinimize" KeyUp="Window_KeyUp">
     <Grid x:Name="Grid" Background="#FFD7D7D7" Width="1280" Height="720">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="11*"/>
@@ -21,7 +21,7 @@
             </Grid.ColumnDefinitions>
             <Button x:Name="SaveButton" Content="Сохранить" FontSize="10" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Click="Save" Width="60" Margin="0,5"/>
             <Button x:Name="LoadButton" Content="Загрузить" FontSize="10" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Click="Load" Width="60" Margin="130,5" Grid.Column="1"/>
-            <Button x:Name="NewButton" Content="Очистить" FontSize="10" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Click="New" Width="60" Margin="130,5" Grid.Column="2"/>
+            <Button x:Name="ClearButton" Content="Очистить" FontSize="10" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Click="Button_Click" Width="60" Margin="130,5" Grid.Column="2"/>
         </Grid>
         <SelectiveScrollingGrid x:Name="FurnitureList" HorizontalAlignment="Left" Margin="0,30,0,0" Width="200" Background="#FFF0F0F0" Grid.ColumnSpan="2">
             <SelectiveScrollingGrid.RowDefinitions>

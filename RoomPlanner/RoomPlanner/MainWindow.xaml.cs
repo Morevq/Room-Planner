@@ -29,7 +29,7 @@ namespace RoomPlanner
             instance = this;
             elements = new List<Element>();
             InitializeComponent();
-            MouseMove += Window_MouseMove;
+            //MouseMove += Window_MouseMove;
         }
 
         public Element lockedElement; //текущий выбранный объект
@@ -40,6 +40,9 @@ namespace RoomPlanner
             Button button = (Button)sender;
             switch (button.Name)
             {
+                case "ClearButton":
+                    elements.Clear();
+                    break;
                 case "CreateRoomButton":
                     Room room = new Room();
                     elements.Add(room);
@@ -81,6 +84,7 @@ namespace RoomPlanner
                     elements.Add(tv);
                     break;
             }
+            
         }
 
         public void Window_MouseMove(object sender, MouseEventArgs e) //реализия перетаскивания объектов
@@ -99,6 +103,16 @@ namespace RoomPlanner
         private void CompleteButton_Click(object sender, RoutedEventArgs e)
         {
             //lockedElement.Width = Convert.ToInt32(ObjWidth.Text);
+        }
+
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                lockedElement.isSelected = false;
+                lockedElement = null;
+                PropertyList.Visibility = Visibility.Hidden;
+            }
         }
 
         public void Save(object sender, RoutedEventArgs e)
