@@ -18,8 +18,10 @@ namespace RoomPlanner
     {
         protected int width;
         protected int height;
+        protected int incline;
         public virtual int Width { get; set; }
         public virtual int Height { get; set; }
+        public virtual int Incline { get; set; }
         protected bool isSelected = false;
         public virtual bool IsSelected
         {
@@ -66,10 +68,11 @@ namespace RoomPlanner
     [Serializable]
     public class Room : Element
     {
-        public Room(int width = 600, int height = 600)
+        public Room(int width = 600, int height = 600, int incline = 0)
         {
             Width = width;
             Height = height;
+            Incline = incline;
 
             Rectangle element = new Rectangle()
             {
@@ -84,6 +87,10 @@ namespace RoomPlanner
             element.MouseLeftButtonDown += LeftMouseDown;
             element.MouseLeftButtonUp += LeftMouseUp;
             element.MouseRightButtonUp += RightMouseUp;
+
+            RotateTransform rotateTransform = new RotateTransform(Incline);
+            element.RenderTransform = rotateTransform;
+
             MainWindow.instance.WorkTable.Children.Add(element);
         }
 
@@ -110,16 +117,29 @@ namespace RoomPlanner
                 height = value;
             }
         }
+
+        public override int Incline
+        {
+            get
+            {
+                return incline;
+            }
+            set
+            {
+                incline = value;
+            }
+        }
     }
 
     [Serializable]
     public class Wardrobe : Element
     {
-        public Wardrobe(int width = 100, int height = 50)
+        public Wardrobe(int width = 100, int height = 50, int incline = 0)
         {
             Width = width;
             Height = height;
-            
+            Incline = incline;
+
             Rectangle element = new Rectangle()
             {
                 Width = Width,
@@ -134,6 +154,10 @@ namespace RoomPlanner
             MainWindow.instance.WorkTable.Children.Add(element);
             element.MouseLeftButtonDown += LeftMouseDown;
             element.MouseLeftButtonUp += LeftMouseUp;
+
+            RotateTransform rotateTransform = new RotateTransform(Incline);
+            element.RenderTransform = rotateTransform;
+
             element.MouseRightButtonUp += RightMouseUp;
         }
 
@@ -158,6 +182,18 @@ namespace RoomPlanner
             set
             {
                 height = value;
+            }
+        }
+
+        public override int Incline
+        {
+            get
+            {
+                return incline;
+            }
+            set
+            {
+                incline = value;
             }
         }
     }
@@ -231,6 +267,18 @@ namespace RoomPlanner
                 height = value;
             }
         }
+
+        public override int Incline
+        {
+            get
+            {
+                return incline;
+            }
+            set
+            {
+                incline = value;
+            }
+        }
     }
 
     [Serializable]
@@ -296,16 +344,28 @@ namespace RoomPlanner
                 height = value;
             }
         }
+
+        public override int Incline
+        {
+            get
+            {
+                return incline;
+            }
+            set
+            {
+                incline = value;
+            }
+        }
     }
 
     [Serializable]
     public class Сasement : Element
     {
-        public Сasement(int width = 100, int height = 10)
+        public Сasement(int width = 100, int height = 10, int incline = 0)
         {
             Width = width;
             Height = height;
-            
+            Incline = incline;
 
             Rectangle element = new Rectangle()
             {
@@ -321,6 +381,10 @@ namespace RoomPlanner
             element.MouseLeftButtonDown += LeftMouseDown;
             element.MouseLeftButtonUp += LeftMouseUp;
             element.MouseRightButtonUp += RightMouseUp;
+
+            RotateTransform rotateTransform = new RotateTransform(Incline);
+            element.RenderTransform = rotateTransform;
+
             MainWindow.instance.WorkTable.Children.Add(element);
         }
 
@@ -345,6 +409,18 @@ namespace RoomPlanner
             set
             {
                 height = value;
+            }
+        }
+
+        public override int Incline
+        {
+            get
+            {
+                return incline;
+            }
+            set
+            {
+                incline = value;
             }
         }
     }
@@ -424,6 +500,18 @@ namespace RoomPlanner
                 height = value;
             }
         }
+
+        public override int Incline
+        {
+            get
+            {
+                return incline;
+            }
+            set
+            {
+                incline = value;
+            }
+        }
     }
 
     [Serializable]
@@ -489,16 +577,29 @@ namespace RoomPlanner
                 height = value;
             }
         }
+
+        public override int Incline
+        {
+            get
+            {
+                return incline;
+            }
+            set
+            {
+                incline = value;
+            }
+        }
     }
 
     [Serializable]
     public class Desk : Element
     {
-        public Desk(int width = 100, int height = 50)
+        public Desk(int width = 100, int height = 50, int incline = 0)
         {
             Width = width;
             Height = height;
-            
+            Incline = incline;
+
             Rectangle element = new Rectangle()
             {
                 Width = Width,
@@ -510,10 +611,15 @@ namespace RoomPlanner
             shape = element;
             Canvas.SetLeft(element, (MainWindow.instance.WorkTable.ActualWidth - width) / 2);
             Canvas.SetTop(element, (MainWindow.instance.WorkTable.ActualHeight - height) / 2);
-            MainWindow.instance.WorkTable.Children.Add(element);
+
+            RotateTransform rotateTransform = new RotateTransform(Incline);
+            element.RenderTransform = rotateTransform;
+
             element.MouseLeftButtonDown += LeftMouseDown;
             element.MouseLeftButtonUp += LeftMouseUp;
             element.MouseRightButtonUp += RightMouseUp;
+            MainWindow.instance.WorkTable.Children.Add(element);
+            
         }
 
         public override int Width
@@ -537,6 +643,18 @@ namespace RoomPlanner
             set
             {
                 height = value;
+            }
+        }
+
+        public override int Incline
+        {
+            get
+            {
+                return incline;
+            }
+            set
+            {
+                incline = value;
             }
         }
     }
@@ -604,16 +722,28 @@ namespace RoomPlanner
                 height = value;
             }
         }
+
+        public override int Incline
+        {
+            get
+            {
+                return incline;
+            }
+            set
+            {
+                incline = value;
+            }
+        }
     }
 
     [Serializable]
     public class Tv : Element
     {
-        public Tv(int width = 100, int height = 10)
+        public Tv(int width = 100, int height = 10, int incline = 0)
         {
             Width = width;
             Height = height;
-            
+            Incline = incline;
 
             Rectangle element = new Rectangle()
             {
@@ -629,6 +759,10 @@ namespace RoomPlanner
             element.MouseLeftButtonDown += LeftMouseDown;
             element.MouseLeftButtonUp += LeftMouseUp;
             element.MouseRightButtonUp += RightMouseUp;
+
+            RotateTransform rotateTransform = new RotateTransform(Incline);
+            element.RenderTransform = rotateTransform;
+
             MainWindow.instance.WorkTable.Children.Add(element);
         }
 
@@ -653,6 +787,18 @@ namespace RoomPlanner
             set
             {
                 height = value;
+            }
+        }
+
+        public override int Incline
+        {
+            get
+            {
+                return incline;
+            }
+            set
+            {
+                incline = value;
             }
         }
     }

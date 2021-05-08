@@ -69,6 +69,8 @@
             <Label Content="Ширина" Grid.Row="2" Margin="0,0,100,0" VerticalContentAlignment="Center" FontSize="18" FontFamily="Segoe UI Semibold" Padding="10,5,5,5"/>
             <TextBox x:Name="ObjWidth" Grid.Row="2" TextWrapping="Wrap" VerticalContentAlignment="Center" Margin="110,0,10,0" VerticalAlignment="Center"/>
             <Button x:Name="CompleteButton" Content="Готово" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Click="CompleteButton_Click" Grid.Row="10" Margin="10"/>
+            <Label Content="Градус&#xD;&#xA;наклона&#xD;&#xA;" Grid.Row="3" Margin="0,0,100,0" VerticalContentAlignment="Center" FontSize="18" FontFamily="Segoe UI Semibold" Padding="10,5,5,5"/>
+            <TextBox x:Name="ObjIncline" Grid.Row="3" TextWrapping="Wrap" VerticalContentAlignment="Center" Margin="110,23.52,10,25.52" VerticalAlignment="Center"/>
         </SelectiveScrollingGrid>
     </Grid>
 </Window>
