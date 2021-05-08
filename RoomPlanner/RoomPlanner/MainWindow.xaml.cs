@@ -109,7 +109,7 @@ namespace RoomPlanner
         {
             if (e.Key == Key.Escape)
             {
-                lockedElement.isSelected = false;
+             lockedElement.isSelected = false;
                 lockedElement = null;
                 PropertyList.Visibility = Visibility.Hidden;
             }
