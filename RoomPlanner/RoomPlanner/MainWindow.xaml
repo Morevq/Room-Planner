@@ -7,11 +7,7 @@
         mc:Ignorable="d"
         Title="RoomPlanner" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" ResizeMode="CanMinimize" KeyUp="Window_KeyUp">
     <Grid x:Name="Grid" Background="#FFD7D7D7" Width="1280" Height="720">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="11*"/>
-            <ColumnDefinition Width="69*"/>
-        </Grid.ColumnDefinitions>
-        <Canvas x:Name="WorkTable" Margin="24,30,200,0" Grid.Column="1"/>
+        <Canvas x:Name="WorkTable" Margin="200,30,200,0"/>
         <Grid x:Name="SettingsPanel" VerticalAlignment="Top" Height="30" Background="#FF323232" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -50,6 +46,10 @@
             <Button x:Name="CreateTvButton" Content="Зеркало/Телевизор" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="10" Click="Button_Click"/>
         </SelectiveScrollingGrid>
         <SelectiveScrollingGrid x:Name="PropertyList" HorizontalAlignment="Right" Margin="0,30,0,0" Width="200" Background="#FFF0F0F0" Grid.Column="1">
+            <SelectiveScrollingGrid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </SelectiveScrollingGrid.ColumnDefinitions>
             <SelectiveScrollingGrid.RowDefinitions>
                 <RowDefinition Height="20"/>
                 <RowDefinition/>
@@ -63,12 +63,14 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </SelectiveScrollingGrid.RowDefinitions>
-            <Label Content="Свойства" FontFamily="Segoe UI Semibold" Padding="5,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="#FF272727" Foreground="White"/>
-            <Label Content="Длина" Grid.Row="1" Margin="0,0,100,0" VerticalContentAlignment="Center" FontSize="18" FontFamily="Segoe UI Semibold" Padding="10,5,5,5"/>
-            <TextBox x:Name="ObjHeight" Grid.Row="1" TextWrapping="Wrap" VerticalContentAlignment="Center" Margin="110,0,10,0" VerticalAlignment="Center"/>
-            <Label Content="Ширина" Grid.Row="2" Margin="0,0,100,0" VerticalContentAlignment="Center" FontSize="18" FontFamily="Segoe UI Semibold" Padding="10,5,5,5"/>
-            <TextBox x:Name="ObjWidth" Grid.Row="2" TextWrapping="Wrap" VerticalContentAlignment="Center" Margin="110,0,10,0" VerticalAlignment="Center"/>
-            <Button x:Name="CompleteButton" Content="Готово" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Click="CompleteButton_Click" Grid.Row="10" Margin="10"/>
+            <Label Content="Свойства" FontFamily="Segoe UI Semibold" Padding="5,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="#FF272727" Foreground="White" Grid.ColumnSpan="2"/>
+            <Label Content="Длина" Grid.Row="1" VerticalContentAlignment="Center" FontSize="18" FontFamily="Segoe UI Semibold" Padding="10,5,5,5"/>
+            <TextBox x:Name="ObjHeight" Grid.Row="1" TextWrapping="Wrap" VerticalContentAlignment="Center" Margin="10,0" VerticalAlignment="Center" Grid.Column="1"/>
+            <Label Content="Ширина" Grid.Row="2" VerticalContentAlignment="Center" FontSize="18" FontFamily="Segoe UI Semibold" Padding="10,5,5,5"/>
+            <TextBox x:Name="ObjWidth" Grid.Row="2" TextWrapping="Wrap" VerticalContentAlignment="Center" Margin="10,0" VerticalAlignment="Center" Grid.Column="1"/>
+            <Label Content="Угол" VerticalContentAlignment="Center" FontSize="18" FontFamily="Segoe UI Semibold" Padding="10,5,5,5" Grid.Row="3"/>
+            <TextBox x:Name="ObjAngle" Grid.Row="3" TextWrapping="Wrap" VerticalContentAlignment="Center" Margin="10,24.52" VerticalAlignment="Center" Grid.Column="1"/>
+            <Button x:Name="CompleteButton" Content="Готово" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Click="CompleteButton_Click" Grid.Row="10" Margin="10" Grid.ColumnSpan="2"/>
         </SelectiveScrollingGrid>
     </Grid>
 </Window>
