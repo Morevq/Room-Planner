@@ -18,61 +18,76 @@ namespace RoomPlanner
     {
         protected int width;
         protected int height;
-        protected int incline;
         public virtual int Width { get; set; }
         public virtual int Height { get; set; }
-        public virtual int Incline { get; set; }
-        protected bool isSelected = false;
-        public virtual bool IsSelected
-        {
-            get
-            {
-                return isSelected;
-            }
-            set
-            {
-                Brush brush = value ? Brushes.DarkBlue : Brushes.Black;
-                shape.Stroke = brush;
-                isSelected = value;
-            }
-        }
-        public bool isDragged = false;
+        public bool isSelected = false;
 
         public Shape shape;
 
+        /// <summary>
+        /// Нажатие ЛКМ по объекту
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void LeftMouseDown(object sender, MouseButtonEventArgs e)
         {
-            MainWindow.instance.lockedElement = this;
-            MainWindow.instance.ObjHeight.Text = Convert.ToString(MainWindow.instance.lockedElement.Height);
-            MainWindow.instance.ObjWidth.Text = Convert.ToString(MainWindow.instance.lockedElement.Width);
-            MainWindow.instance.ttop = Canvas.GetTop(shape);
-            MainWindow.instance.lleft = Canvas.GetLeft(shape);
+            if (isSelected == true)
+            {
+                MainWindow.instance.MouseMove += MainWindow.instance.Window_MouseMove;
 
-            Point point = e.GetPosition(MainWindow.instance.WorkTable);
-            MainWindow.instance.deltaX = point.X;
-            MainWindow.instance.deltaY = point.Y;
+                MainWindow.instance.ttop = Canvas.GetTop(shape);
+                MainWindow.instance.lleft = Canvas.GetLeft(shape);
+                Point point = e.GetPosition(MainWindow.instance.WorkTable);
+                MainWindow.instance.deltaX = point.X;
+                MainWindow.instance.deltaY = point.Y;
+            }
         }
 
+        /// <summary>
+        /// Отпускание ЛКМ на объекте
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void LeftMouseUp(object sender, MouseButtonEventArgs e)
         {
-            MainWindow.instance.lockedElement = null;
+            if (isSelected == false)
+            {
+                MainWindow.instance.lockedElement = this;
+                isSelected = true;
+                MainWindow.instance.PropertyList.Visibility = Visibility.Visible;
+                MainWindow.instance.ObjHeight.Text = Convert.ToString(MainWindow.instance.lockedElement.Height);
+                MainWindow.instance.ObjWidth.Text = Convert.ToString(MainWindow.instance.lockedElement.Width);
+                //MainWindow.instance.ObjAngle.Text = Convert.ToString(MainWindow.instance.lockedElement.shape)
+            }
+            else
+            {
+                MainWindow.instance.MouseMove -= MainWindow.instance.Window_MouseMove;
+            }
         }
 
+        /// <summary>
+        /// Удаление объекта на ПКМ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void RightMouseUp(object sender, MouseButtonEventArgs e)
         {
             MainWindow.instance.WorkTable.Children.Remove(shape);
             MainWindow.instance.elements.Remove(this);
+            MainWindow.instance.lockedElement = null;
+            MainWindow.instance.PropertyList.Visibility = Visibility.Hidden;
         }
+
+        public virtual void Resize() { }
     }
 
     [Serializable]
     public class Room : Element
     {
-        public Room(int width = 600, int height = 600, int incline = 0)
+        public Room(int width = 600, int height = 600)
         {
             Width = width;
             Height = height;
-            Incline = incline;
 
             Rectangle element = new Rectangle()
             {
@@ -87,59 +102,18 @@ namespace RoomPlanner
             element.MouseLeftButtonDown += LeftMouseDown;
             element.MouseLeftButtonUp += LeftMouseUp;
             element.MouseRightButtonUp += RightMouseUp;
-
-            RotateTransform rotateTransform = new RotateTransform(Incline);
-            element.RenderTransform = rotateTransform;
-
             MainWindow.instance.WorkTable.Children.Add(element);
-        }
-
-        public override int Width
-        {
-            get
-            {
-                return width;
-            }
-            set
-            {
-                width = value;
-            }
-        }
-
-        public override int Height
-        {
-            get
-            {
-                return height;
-            }
-            set
-            {
-                height = value;
-            }
-        }
-
-        public override int Incline
-        {
-            get
-            {
-                return incline;
-            }
-            set
-            {
-                incline = value;
-            }
         }
     }
 
     [Serializable]
     public class Wardrobe : Element
     {
-        public Wardrobe(int width = 100, int height = 50, int incline = 0)
+        public Wardrobe(int width = 100, int height = 50)
         {
             Width = width;
             Height = height;
-            Incline = incline;
-
+            
             Rectangle element = new Rectangle()
             {
                 Width = Width,
@@ -154,10 +128,6 @@ namespace RoomPlanner
             MainWindow.instance.WorkTable.Children.Add(element);
             element.MouseLeftButtonDown += LeftMouseDown;
             element.MouseLeftButtonUp += LeftMouseUp;
-
-            RotateTransform rotateTransform = new RotateTransform(Incline);
-            element.RenderTransform = rotateTransform;
-
             element.MouseRightButtonUp += RightMouseUp;
         }
 
@@ -182,18 +152,6 @@ namespace RoomPlanner
             set
             {
                 height = value;
-            }
-        }
-
-        public override int Incline
-        {
-            get
-            {
-                return incline;
-            }
-            set
-            {
-                incline = value;
             }
         }
     }
@@ -267,26 +225,15 @@ namespace RoomPlanner
                 height = value;
             }
         }
-
-        public override int Incline
-        {
-            get
-            {
-                return incline;
-            }
-            set
-            {
-                incline = value;
-            }
-        }
     }
 
     [Serializable]
     public class Bed : Element
     {
-        public Bed()
+        public Bed(int width = 100, int height = 150)
         {
-            
+            Width = width;
+            Height = height;
 
             GeometryGroup geometryGroup = new GeometryGroup();
             geometryGroup.FillRule = FillRule.Nonzero;
@@ -298,19 +245,19 @@ namespace RoomPlanner
             };
 
             RectangleGeometry rectGeometry0 = new RectangleGeometry();
-            rectGeometry0.Rect = new Rect(-50, -75, 100, 150);
+            rectGeometry0.Rect = new Rect(0, 0, Width, Height);
             geometryGroup.Children.Add(rectGeometry0);
 
             RectangleGeometry rectGeometry1 = new RectangleGeometry();
-            rectGeometry1.Rect = new Rect(-44, -70, 40, 30);
+            rectGeometry1.Rect = new Rect(0.06 * Width, 0.0333 * Height, 0.4 * Width, 0.2 * Height); //6 5 40 30
             geometryGroup.Children.Add(rectGeometry1);
 
             RectangleGeometry rectGeometry2 = new RectangleGeometry();
-            rectGeometry2.Rect = new Rect(4, -70, 40, 30);
+            rectGeometry2.Rect = new Rect(0.54 * Width, 0.0333 * Height, 0.4 * Width, 0.2 * Height); //54 5 40 30
             geometryGroup.Children.Add(rectGeometry2);
 
             element.Data = geometryGroup;
-            this.shape = element;
+            shape = element;
 
             Canvas.SetLeft(element, (MainWindow.instance.WorkTable.ActualWidth - width) / 2);
             Canvas.SetTop(element, (MainWindow.instance.WorkTable.ActualHeight - height) / 2);
@@ -321,51 +268,24 @@ namespace RoomPlanner
             element.MouseRightButtonUp += RightMouseUp;
         }
 
-        public override int Width
+        public override void Resize()
         {
-            get
-            {
-                return width;
-            }
-            set
-            {
-                width = value;
-            }
-        }
-
-        public override int Height
-        {
-            get
-            {
-                return height;
-            }
-            set
-            {
-                height = value;
-            }
-        }
-
-        public override int Incline
-        {
-            get
-            {
-                return incline;
-            }
-            set
-            {
-                incline = value;
-            }
+            MainWindow.instance.WorkTable.Children.Remove(shape);
+            MainWindow.instance.elements.Remove(this);
+            Bed bed = new Bed(Width, Height);
+            MainWindow.instance.lockedElement = bed;
+            MainWindow.instance.lockedElement.isSelected = true;
         }
     }
 
     [Serializable]
     public class Сasement : Element
     {
-        public Сasement(int width = 100, int height = 10, int incline = 0)
+        public Сasement(int width = 100, int height = 10)
         {
             Width = width;
             Height = height;
-            Incline = incline;
+            
 
             Rectangle element = new Rectangle()
             {
@@ -381,10 +301,6 @@ namespace RoomPlanner
             element.MouseLeftButtonDown += LeftMouseDown;
             element.MouseLeftButtonUp += LeftMouseUp;
             element.MouseRightButtonUp += RightMouseUp;
-
-            RotateTransform rotateTransform = new RotateTransform(Incline);
-            element.RenderTransform = rotateTransform;
-
             MainWindow.instance.WorkTable.Children.Add(element);
         }
 
@@ -409,18 +325,6 @@ namespace RoomPlanner
             set
             {
                 height = value;
-            }
-        }
-
-        public override int Incline
-        {
-            get
-            {
-                return incline;
-            }
-            set
-            {
-                incline = value;
             }
         }
     }
@@ -500,18 +404,6 @@ namespace RoomPlanner
                 height = value;
             }
         }
-
-        public override int Incline
-        {
-            get
-            {
-                return incline;
-            }
-            set
-            {
-                incline = value;
-            }
-        }
     }
 
     [Serializable]
@@ -577,29 +469,16 @@ namespace RoomPlanner
                 height = value;
             }
         }
-
-        public override int Incline
-        {
-            get
-            {
-                return incline;
-            }
-            set
-            {
-                incline = value;
-            }
-        }
     }
 
     [Serializable]
     public class Desk : Element
     {
-        public Desk(int width = 100, int height = 50, int incline = 0)
+        public Desk(int width = 100, int height = 50)
         {
             Width = width;
             Height = height;
-            Incline = incline;
-
+            
             Rectangle element = new Rectangle()
             {
                 Width = Width,
@@ -611,15 +490,10 @@ namespace RoomPlanner
             shape = element;
             Canvas.SetLeft(element, (MainWindow.instance.WorkTable.ActualWidth - width) / 2);
             Canvas.SetTop(element, (MainWindow.instance.WorkTable.ActualHeight - height) / 2);
-
-            RotateTransform rotateTransform = new RotateTransform(Incline);
-            element.RenderTransform = rotateTransform;
-
+            MainWindow.instance.WorkTable.Children.Add(element);
             element.MouseLeftButtonDown += LeftMouseDown;
             element.MouseLeftButtonUp += LeftMouseUp;
             element.MouseRightButtonUp += RightMouseUp;
-            MainWindow.instance.WorkTable.Children.Add(element);
-            
         }
 
         public override int Width
@@ -643,18 +517,6 @@ namespace RoomPlanner
             set
             {
                 height = value;
-            }
-        }
-
-        public override int Incline
-        {
-            get
-            {
-                return incline;
-            }
-            set
-            {
-                incline = value;
             }
         }
     }
@@ -722,28 +584,16 @@ namespace RoomPlanner
                 height = value;
             }
         }
-
-        public override int Incline
-        {
-            get
-            {
-                return incline;
-            }
-            set
-            {
-                incline = value;
-            }
-        }
     }
 
     [Serializable]
     public class Tv : Element
     {
-        public Tv(int width = 100, int height = 10, int incline = 0)
+        public Tv(int width = 100, int height = 10)
         {
             Width = width;
             Height = height;
-            Incline = incline;
+            
 
             Rectangle element = new Rectangle()
             {
@@ -759,10 +609,6 @@ namespace RoomPlanner
             element.MouseLeftButtonDown += LeftMouseDown;
             element.MouseLeftButtonUp += LeftMouseUp;
             element.MouseRightButtonUp += RightMouseUp;
-
-            RotateTransform rotateTransform = new RotateTransform(Incline);
-            element.RenderTransform = rotateTransform;
-
             MainWindow.instance.WorkTable.Children.Add(element);
         }
 
@@ -787,18 +633,6 @@ namespace RoomPlanner
             set
             {
                 height = value;
-            }
-        }
-
-        public override int Incline
-        {
-            get
-            {
-                return incline;
-            }
-            set
-            {
-                incline = value;
             }
         }
     }

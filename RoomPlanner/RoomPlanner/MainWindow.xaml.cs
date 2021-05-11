@@ -29,13 +29,17 @@ namespace RoomPlanner
             instance = this;
             elements = new List<Element>();
             InitializeComponent();
-            //MouseMove += Window_MouseMove;
         }
 
         public Element lockedElement; //текущий выбранный объект
         public double deltaX, deltaY, lleft, ttop; //поля для корректного перетаскивания объектов
 
-        private void Button_Click(object sender, RoutedEventArgs e) //обработчик события нажатия на кнопки из списка объектов слева
+        /// <summary>
+        /// Нажатие на кнопки в столбце "ресурсы"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
             switch (button.Name)
@@ -87,7 +91,12 @@ namespace RoomPlanner
             
         }
 
-        public void Window_MouseMove(object sender, MouseEventArgs e) //реализия перетаскивания объектов
+        /// <summary>
+        /// Перемещение мебели по холсту
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Window_MouseMove(object sender, MouseEventArgs e)
         {
             Point point = e.GetPosition(WorkTable);
             if (lockedElement != null)
@@ -100,21 +109,54 @@ namespace RoomPlanner
             }
         }
 
+        /// <summary>
+        /// Нажатие на кнопку "готово"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CompleteButton_Click(object sender, RoutedEventArgs e)
         {
-            //lockedElement.Width = Convert.ToInt32(ObjWidth.Text);
+            bool success = true;
+
+            try { lockedElement.Width = Convert.ToInt32(ObjWidth.Text); }
+            catch 
+            { 
+                MessageBox.Show("Введите корректное значение");
+                ObjWidth.Text = Convert.ToString(lockedElement.Width);
+                success = false;
+            }
+
+            try { lockedElement.Height = Convert.ToInt32(ObjHeight.Text); }
+            catch
+            {
+                MessageBox.Show("Введите корректное значение");
+                ObjHeight.Text = Convert.ToString(lockedElement.Height);
+                success = false;
+            }
+
+            if (success == true) lockedElement.Resize();
         }
 
+        /// <summary>
+        /// Нажатие на клавишу
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
             {
-             lockedElement.isSelected = false;
+                lockedElement.isSelected = false;
                 lockedElement = null;
                 PropertyList.Visibility = Visibility.Hidden;
             }
         }
 
+        /// <summary>
+        /// Создание файла сохранения
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Save(object sender, RoutedEventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -128,6 +170,11 @@ namespace RoomPlanner
             }
         }
 
+        /// <summary>
+        /// Загрузка файла сохранения
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Load(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -141,6 +188,11 @@ namespace RoomPlanner
             }
         }
 
+        /// <summary>
+        /// Очистка холста от мебели
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void New(object sender, RoutedEventArgs e)
         {
             elements.Clear();
