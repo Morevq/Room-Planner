@@ -135,6 +135,11 @@ namespace RoomPlanner
             }
 
             if (success == true) lockedElement.Resize();
+
+            lockedElement.rotate.Angle = Convert.ToInt32(ObjAngle.Text);
+            lockedElement.rotate.CenterX = lockedElement.Width / 2;
+            lockedElement.rotate.CenterY = lockedElement.Height / 2;
+
         }
 
         /// <summary>

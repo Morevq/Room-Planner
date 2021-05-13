@@ -49,7 +49,11 @@
             <Button x:Name="CreateSinkButton" Content="Раковина" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="9" Click="Button_Click"/>
             <Button x:Name="CreateTvButton" Content="Зеркало/Телевизор" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="10" Click="Button_Click"/>
         </SelectiveScrollingGrid>
-        <SelectiveScrollingGrid x:Name="PropertyList" HorizontalAlignment="Right" Margin="0,30,0,0" Width="200" Background="#FFF0F0F0" Grid.Column="1">
+        <SelectiveScrollingGrid x:Name="PropertyList" HorizontalAlignment="Right" Margin="0,30,0,0" Width="200" Background="#FFF0F0F0" Grid.Column="1" Visibility="Hidden">
+            <SelectiveScrollingGrid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </SelectiveScrollingGrid.ColumnDefinitions>
             <SelectiveScrollingGrid.RowDefinitions>
                 <RowDefinition Height="20"/>
                 <RowDefinition/>
@@ -63,14 +67,14 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </SelectiveScrollingGrid.RowDefinitions>
-            <Label Content="Свойства" FontFamily="Segoe UI Semibold" Padding="5,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="#FF272727" Foreground="White"/>
-            <Label Content="Длина" Grid.Row="1" Margin="0,0,100,0" VerticalContentAlignment="Center" FontSize="18" FontFamily="Segoe UI Semibold" Padding="10,5,5,5"/>
-            <TextBox x:Name="ObjHeight" Grid.Row="1" TextWrapping="Wrap" VerticalContentAlignment="Center" Margin="110,0,10,0" VerticalAlignment="Center"/>
-            <Label Content="Ширина" Grid.Row="2" Margin="0,0,100,0" VerticalContentAlignment="Center" FontSize="18" FontFamily="Segoe UI Semibold" Padding="10,5,5,5"/>
-            <TextBox x:Name="ObjWidth" Grid.Row="2" TextWrapping="Wrap" VerticalContentAlignment="Center" Margin="110,0,10,0" VerticalAlignment="Center"/>
-            <Button x:Name="CompleteButton" Content="Готово" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Click="CompleteButton_Click" Grid.Row="10" Margin="10"/>
-            <Label Content="Градус&#xD;&#xA;наклона&#xD;&#xA;" Grid.Row="3" Margin="0,0,100,0" VerticalContentAlignment="Center" FontSize="18" FontFamily="Segoe UI Semibold" Padding="10,5,5,5"/>
-            <TextBox x:Name="ObjIncline" Grid.Row="3" TextWrapping="Wrap" VerticalContentAlignment="Center" Margin="110,23.52,10,25.52" VerticalAlignment="Center"/>
+            <Label Content="Свойства" FontFamily="Segoe UI Semibold" Padding="5,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="#FF272727" Foreground="White" Grid.ColumnSpan="2"/>
+            <Button x:Name="CompleteButton" Content="Готово" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Click="CompleteButton_Click" Grid.Row="10" Margin="10" Grid.ColumnSpan="2"/>
+            <Label Content="Длина" Grid.Row="1" VerticalContentAlignment="Center" FontSize="18" FontFamily="Segoe UI Semibold" Padding="10,5,5,5"/>
+            <TextBox x:Name="ObjHeight" Grid.Row="1" TextWrapping="Wrap" VerticalContentAlignment="Center" Margin="10,0" VerticalAlignment="Center" Grid.Column="1"/>
+            <Label Content="Ширина" Grid.Row="2" VerticalContentAlignment="Center" FontSize="18" FontFamily="Segoe UI Semibold" Padding="10,5,5,5"/>
+            <TextBox x:Name="ObjWidth" Grid.Row="2" TextWrapping="Wrap" VerticalContentAlignment="Center" Margin="10,0" VerticalAlignment="Center" Grid.Column="1"/>
+            <Label Content="Угол" Grid.Row="3" VerticalContentAlignment="Center" FontSize="18" FontFamily="Segoe UI Semibold" Padding="10,5,5,5"/>
+            <TextBox x:Name="ObjAngle" Grid.Row="3" TextWrapping="Wrap" VerticalContentAlignment="Center" Grid.Column="1" Margin="10,0" VerticalAlignment="Center"/>
         </SelectiveScrollingGrid>
     </Grid>
 </Window>

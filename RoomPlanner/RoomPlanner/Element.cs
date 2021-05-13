@@ -18,11 +18,12 @@ namespace RoomPlanner
     {
         protected int width;
         protected int height;
-        public virtual int Width { get; set; }
-        public virtual int Height { get; set; }
+        public RotateTransform rotate;
+        public Shape shape;
         public bool isSelected = false;
 
-        public Shape shape;
+        public virtual int Width { get; set; }
+        public virtual int Height { get; set; }
 
         /// <summary>
         /// Нажатие ЛКМ по объекту
@@ -52,12 +53,17 @@ namespace RoomPlanner
         {
             if (isSelected == false)
             {
-                MainWindow.instance.lockedElement = this;
+                if (MainWindow.instance.lockedElement == null) MainWindow.instance.lockedElement = this;
+                else
+                {
+                    MainWindow.instance.lockedElement.isSelected = false;
+                    MainWindow.instance.lockedElement = this;
+                }
                 isSelected = true;
                 MainWindow.instance.PropertyList.Visibility = Visibility.Visible;
                 MainWindow.instance.ObjHeight.Text = Convert.ToString(MainWindow.instance.lockedElement.Height);
                 MainWindow.instance.ObjWidth.Text = Convert.ToString(MainWindow.instance.lockedElement.Width);
-                //MainWindow.instance.ObjAngle.Text = Convert.ToString(MainWindow.instance.lockedElement.shape)
+                MainWindow.instance.ObjAngle.Text = Convert.ToString(MainWindow.instance.lockedElement.rotate.Angle);
             }
             else
             {
@@ -237,6 +243,7 @@ namespace RoomPlanner
 
             GeometryGroup geometryGroup = new GeometryGroup();
             geometryGroup.FillRule = FillRule.Nonzero;
+
             Path element = new Path()
             {
                 Stroke = Brushes.Black,
@@ -244,23 +251,26 @@ namespace RoomPlanner
                 StrokeThickness = 2
             };
 
-            RectangleGeometry rectGeometry0 = new RectangleGeometry();
-            rectGeometry0.Rect = new Rect(0, 0, Width, Height);
-            geometryGroup.Children.Add(rectGeometry0);
+            RectangleGeometry rectGeometry = new RectangleGeometry();
+            rectGeometry.Rect = new Rect(0, 0, Width, Height);
+            geometryGroup.Children.Add(rectGeometry);
 
-            RectangleGeometry rectGeometry1 = new RectangleGeometry();
-            rectGeometry1.Rect = new Rect(0.06 * Width, 0.0333 * Height, 0.4 * Width, 0.2 * Height); //6 5 40 30
-            geometryGroup.Children.Add(rectGeometry1);
+            rectGeometry = new RectangleGeometry();
+            rectGeometry.Rect = new Rect(0.06 * Width, 0.0333 * Height, 0.4 * Width, 0.2 * Height); //6 5 40 30
+            geometryGroup.Children.Add(rectGeometry);
 
-            RectangleGeometry rectGeometry2 = new RectangleGeometry();
-            rectGeometry2.Rect = new Rect(0.54 * Width, 0.0333 * Height, 0.4 * Width, 0.2 * Height); //54 5 40 30
-            geometryGroup.Children.Add(rectGeometry2);
+            rectGeometry = new RectangleGeometry();
+            rectGeometry.Rect = new Rect(0.54 * Width, 0.0333 * Height, 0.4 * Width, 0.2 * Height); //54 5 40 30
+            geometryGroup.Children.Add(rectGeometry);
+
+            rotate = new RotateTransform();
+            element.RenderTransform = rotate;
 
             element.Data = geometryGroup;
             shape = element;
 
-            Canvas.SetLeft(element, (MainWindow.instance.WorkTable.ActualWidth - width) / 2);
-            Canvas.SetTop(element, (MainWindow.instance.WorkTable.ActualHeight - height) / 2);
+            Canvas.SetLeft(element, (MainWindow.instance.WorkTable.ActualWidth - Width) / 2);
+            Canvas.SetTop(element, (MainWindow.instance.WorkTable.ActualHeight - Height) / 2);
             MainWindow.instance.WorkTable.Children.Add(element);
 
             element.MouseLeftButtonDown += LeftMouseDown;
@@ -270,9 +280,11 @@ namespace RoomPlanner
 
         public override void Resize()
         {
+            Bed bed = new Bed(Width, Height);
+            Canvas.SetLeft(bed.shape, Canvas.GetLeft(shape));
+            Canvas.SetTop(bed.shape, Canvas.GetTop(shape));
             MainWindow.instance.WorkTable.Children.Remove(shape);
             MainWindow.instance.elements.Remove(this);
-            Bed bed = new Bed(Width, Height);
             MainWindow.instance.lockedElement = bed;
             MainWindow.instance.lockedElement.isSelected = true;
         }
