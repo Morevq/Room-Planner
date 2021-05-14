@@ -12,7 +12,6 @@ using System.Windows.Data;
 
 namespace RoomPlanner
 {
-
     [Serializable]
     abstract public class Element // родительский класс для элементов интерьера
     {
@@ -22,8 +21,38 @@ namespace RoomPlanner
         public Shape shape; // поле для хранения ссылки на графический объект
         public bool isSelected = false;
 
-        public virtual int Width { get; set; }
-        public virtual int Height { get; set; }
+        public virtual int Width
+        {
+            set
+            {
+                if (value < 1)
+                {
+                    MessageBox.Show("Введите корректное значение");
+                    MainWindow.instance.ObjWidth.Text = Convert.ToString(width);
+                }
+                else width = value;
+            }
+            get
+            {
+                return width;
+            }
+        }
+        public virtual int Height
+        {
+            set
+            {
+                if (value < 1)
+                {
+                    MessageBox.Show("Введите корректное значение");
+                    MainWindow.instance.ObjHeight.Text = Convert.ToString(height);
+                }
+                else height = value;
+            }
+            get
+            {
+                return height;
+            }
+        }
 
         /// <summary>
         /// Изменение размеров объекта

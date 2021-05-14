@@ -49,7 +49,7 @@
             <Button x:Name="CreateSinkButton" Content="Раковина" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="9" Click="Button_Click"/>
             <Button x:Name="CreateTvButton" Content="Зеркало/Телевизор" FontSize="20" FontFamily="Segoe UI Semibold" Background="#FF323232" Foreground="White" Grid.Row="10" Click="Button_Click"/>
         </SelectiveScrollingGrid>
-        <SelectiveScrollingGrid x:Name="PropertyList" HorizontalAlignment="Right" Margin="0,30,0,0" Width="200" Background="#FFF0F0F0" Grid.Column="1">
+        <SelectiveScrollingGrid x:Name="PropertyList" HorizontalAlignment="Right" Margin="0,30,0,0" Width="200" Background="#FFF0F0F0" Grid.Column="1" Visibility="Hidden">
             <SelectiveScrollingGrid.ColumnDefinitions>
                 <ColumnDefinition Width="6*"/>
                 <ColumnDefinition Width="4*"/>

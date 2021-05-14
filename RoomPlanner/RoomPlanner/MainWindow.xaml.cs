@@ -119,8 +119,8 @@ namespace RoomPlanner
             bool success = true;
 
             try { lockedElement.Width = Convert.ToInt32(ObjWidth.Text); }
-            catch 
-            { 
+            catch
+            {
                 MessageBox.Show("Введите корректное значение");
                 ObjWidth.Text = Convert.ToString(lockedElement.Width);
                 success = false;
