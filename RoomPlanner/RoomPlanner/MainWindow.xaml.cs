@@ -26,8 +26,8 @@ namespace RoomPlanner
 
         public MainWindow()
         {
-            instance = this;
-            elements = new List<Element>();
+            instance = this; // поле для хранения ссылки на окно
+            elements = new List<Element>(); // список всех элементов
             InitializeComponent();
         }
 
@@ -64,7 +64,7 @@ namespace RoomPlanner
                     elements.Add(bed);
                     break;
                 case "CreateСasementButton":
-                    Сasement casement = new Сasement();
+                    Casement casement = new Casement();
                     elements.Add(casement);
                     break;
                 case "CreateSofaButton":
@@ -154,6 +154,25 @@ namespace RoomPlanner
                 lockedElement.isSelected = false;
                 lockedElement = null;
                 PropertyList.Visibility = Visibility.Hidden;
+            }
+        }
+
+        /// <summary>
+        /// Приближение / отдаление
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0)
+            {
+                ScaleTransform scale = new ScaleTransform(1, 1);
+                WorkTable.RenderTransform = scale;
+            }
+            else
+            {
+                ScaleTransform scale = new ScaleTransform(0.5, 0.5);
+                WorkTable.RenderTransform = scale;
             }
         }
 
